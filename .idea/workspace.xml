@@ -4,20 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/handlers/commands/broadcast.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/helpers/context.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/db.go" afterDir="false" />
+    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="Added Database">
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/command_start.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/command_start.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/commands/start.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/commands/start.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/handlers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/env.go" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/env.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/context.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +70,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Added Database" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Database" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
