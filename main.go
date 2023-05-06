@@ -3,6 +3,7 @@ package main
 import (
 	"bot/handlers"
 	"bot/helpers"
+	"bot/model"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"log"
@@ -11,6 +12,7 @@ import (
 func init() {
 	helpers.InitEnv()
 	helpers.InitConstants()
+	model.InitDB()
 }
 
 func main() {
@@ -19,6 +21,7 @@ func main() {
 		log.Fatal("Error creating bot: ", err)
 		return
 	}
+
 	updater := ext.NewUpdater(nil)
 	handlers.Load(updater.Dispatcher)
 	err = updater.StartPolling(

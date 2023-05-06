@@ -8,9 +8,9 @@ import (
 )
 
 type env struct {
-	BotToken string `validate:"required"`
-	MongoURI string `validate:"required"`
-	AdminIds string `validate:"required"`
+	BotToken    string `validate:"required"`
+	PostgresUri string `validate:"required"`
+	AdminIds    string `validate:"required"`
 }
 
 var Env *env
@@ -22,9 +22,9 @@ func InitEnv() {
 	}
 
 	Env = &env{
-		BotToken: os.Getenv("BOT_TOKEN"),
-		MongoURI: os.Getenv("MONGO_URI"),
-		AdminIds: os.Getenv("ADMIN_IDS"),
+		BotToken:    os.Getenv("BOT_TOKEN"),
+		PostgresUri: os.Getenv("POSTGRES_URI"),
+		AdminIds:    os.Getenv("ADMIN_IDS"),
 	}
 
 	validate := validator.New()

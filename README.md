@@ -1,4 +1,4 @@
-# Telegram bot starter based for [Gotgbo](https://github.com/PaulSonOfLars/gotgbot)
+# Telegram bot starter based for [Gotgbot](https://github.com/PaulSonOfLars/gotgbot)
 
 Please, enjoy this starter template for gotgbot Telegram bots based on [HoneySingh](t.me/ronnekeren). It includes most common middlewares, MongoDB integration, language picker and internationalization and shows basic encapsulation techniques used by me.
 
