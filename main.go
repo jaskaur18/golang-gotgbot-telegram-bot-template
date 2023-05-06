@@ -7,6 +7,7 @@ import (
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"log"
+	"net/http"
 )
 
 func init() {
@@ -16,22 +17,35 @@ func init() {
 }
 
 func main() {
-	bot, err := gotgbot.NewBot(helpers.Env.BotToken, nil)
+	bot, err := gotgbot.NewBot(helpers.Env.BotToken, &gotgbot.BotOpts{
+		Client: http.Client{},
+		DefaultRequestOpts: &gotgbot.RequestOpts{
+			Timeout: gotgbot.DefaultTimeout,
+			APIURL:  gotgbot.DefaultAPIURL,
+		},
+	})
 	if err != nil {
 		log.Fatal("Error creating bot: ", err)
 		return
 	}
 
-	updater := ext.NewUpdater(nil)
+	// Create updater and dispatcher.
+	updater := ext.NewUpdater(&ext.UpdaterOpts{
+		Dispatcher: ext.NewDispatcher(&ext.DispatcherOpts{
+			// If an error is returned by a handler, log it and continue going.
+			Error: func(b *gotgbot.Bot, ctx *ext.Context, err error) ext.DispatcherAction {
+				log.Println("an error occurred while handling update:", err.Error())
+				return ext.DispatcherActionNoop
+			},
+			MaxRoutines: ext.DefaultMaxRoutines,
+		}),
+	})
 	handlers.Load(updater.Dispatcher)
-	err = updater.StartPolling(
-		bot, &ext.PollingOpts{
-			// DropPendingUpdates: true,
-		},
-	)
-	if err != nil {
-		log.Fatal("Error starting updater: ", err)
-		return
+
+	if helpers.Env.PROD {
+		helpers.ProdLaunch(bot, updater)
+	} else {
+		helpers.DevLaunch(bot, updater)
 	}
 
 	log.Println("🔥 Bot Is Running 🔥")

@@ -8,9 +8,12 @@ import (
 )
 
 type env struct {
-	BotToken    string `validate:"required"`
-	PostgresUri string `validate:"required"`
-	AdminIds    string `validate:"required"`
+	BotToken      string `validate:"required"`
+	PostgresUri   string `validate:"required"`
+	AdminIds      string `validate:"required"`
+	PROD          bool   `validate:"boolean"`
+	WebhookUrl    string `validate:"required_if=PROD true"`
+	WebhookSecret string `validate:"required_if=PROD true"`
 }
 
 var Env *env
@@ -22,9 +25,12 @@ func InitEnv() {
 	}
 
 	Env = &env{
-		BotToken:    os.Getenv("BOT_TOKEN"),
-		PostgresUri: os.Getenv("POSTGRES_URI"),
-		AdminIds:    os.Getenv("ADMIN_IDS"),
+		BotToken:      os.Getenv("BOT_TOKEN"),
+		PostgresUri:   os.Getenv("POSTGRES_URI"),
+		AdminIds:      os.Getenv("ADMIN_IDS"),
+		PROD:          os.Getenv("PROD") == "true",
+		WebhookUrl:    os.Getenv("WEBHOOK_URL"),
+		WebhookSecret: os.Getenv("WEBHOOK_SECRET"),
 	}
 
 	validate := validator.New()
