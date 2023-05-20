@@ -5,32 +5,52 @@ import (
 	"github.com/joho/godotenv"
 	"log"
 	"os"
+	"reflect"
+	"strconv"
+	"strings"
 )
 
 type env struct {
-	BotToken      string `validate:"required"`
-	PostgresUri   string `validate:"required"`
-	AdminIds      string `validate:"required"`
-	PROD          bool   `validate:"boolean"`
-	WebhookUrl    string `validate:"required_if=PROD true"`
-	WebhookSecret string `validate:"required_if=PROD true"`
+	BotToken      string `validate:"required" json:"BOT_TOKEN"`
+	PostgresUri   string `validate:"required" json:"POSTGRES_URI"`
+	AdminIds      string `validate:"required" json:"ADMIN_IDS"`
+	PROD          bool   `validate:"boolean" json:"PROD"`
+	WebhookUrl    string `validate:"required_if=PROD true" json:"WEBHOOK_URL"`
+	WebhookSecret string `validate:"required_if=PROD true" json:"WEBHOOK_SECRET"`
 }
 
-var Env *env
+var Env env
 
 func InitEnv() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Panic("Error loading .env file: ", err)
+		log.Fatal("Error loading .env file ", err)
 	}
 
-	Env = &env{
-		BotToken:      os.Getenv("BOT_TOKEN"),
-		PostgresUri:   os.Getenv("POSTGRES_URI"),
-		AdminIds:      os.Getenv("ADMIN_IDS"),
-		PROD:          os.Getenv("PROD") == "true",
-		WebhookUrl:    os.Getenv("WEBHOOK_URL"),
-		WebhookSecret: os.Getenv("WEBHOOK_SECRET"),
+	envType := reflect.TypeOf(Env)
+	envValue := reflect.ValueOf(&Env).Elem()
+
+	for _, e := range os.Environ() {
+		pair := strings.SplitN(e, "=", 2)
+		envVarName := pair[0]
+		envVarValue := pair[1]
+
+		for i := 0; i < envType.NumField(); i++ {
+			field := envType.Field(i)
+
+			jsonTag := field.Tag.Get("json")
+			if jsonTag == envVarName {
+				if field.Type.Name() == "string" {
+					envValue.FieldByName(field.Name).SetString(envVarValue)
+				} else if field.Type.Name() == "bool" {
+					b, err := strconv.ParseBool(envVarValue)
+					if err != nil {
+						log.Fatal("Error parsing boolean value from environment variable: ", err)
+					}
+					envValue.FieldByName(field.Name).SetBool(b)
+				}
+			}
+		}
 	}
 
 	validate := validator.New()

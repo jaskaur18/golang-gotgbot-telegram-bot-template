@@ -14,7 +14,9 @@ func CommandStart(b *gotgbot.Bot, ctx *ext.Context) error {
 		LastName:   ctx.EffectiveUser.LastName,
 		Username:   ctx.EffectiveUser.Username,
 	}
+
 	err := model.CreateUser(&user)
+
 	if err != nil {
 		ctx.Message.Reply(b, "Error Happened", nil)
 		return err
@@ -29,5 +31,6 @@ func CommandStart(b *gotgbot.Bot, ctx *ext.Context) error {
 			"text",
 		).Build(),
 	})
+
 	return nil
 }

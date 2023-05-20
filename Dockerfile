@@ -1,21 +1,21 @@
-FROM golang:1.16-alpine AS builder
+# Use an official Go runtime as a parent image
+FROM golang:1.20-alpine
 
-WORKDIR /app
+# Set the working directory to /go/src/app
+WORKDIR /go/src/app
 
-COPY go.mod go.sum ./
+# Install build-base package
+RUN apk add --no-cache build-base
 
-RUN go mod download
-
+# Copy the current directory contents into the container at /go/src/app
 COPY . .
 
+# Build the app
 RUN make build
 
-# Path: Dockerfile
 
-FROM alpine:latest
+RUN echo "Running the app..."
 
-WORKDIR /app
+# Start the app
+CMD make run
 
-COPY --from=builder /app/bin/ /app/bin/
-
-CMD ["make run"]
