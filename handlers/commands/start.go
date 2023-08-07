@@ -1,28 +1,29 @@
 package commands
 
 import (
-	"bot/model"
+	"bot/db"
+	"bot/handlers/misc"
+	"bot/helper"
+	"context"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/gotgbot/keyboard"
 )
 
-func CommandStart(b *gotgbot.Bot, ctx *ext.Context) error {
-	user := model.User{
-		TelegramId: ctx.EffectiveUser.Id,
-		FirstName:  ctx.EffectiveUser.FirstName,
-		LastName:   ctx.EffectiveUser.LastName,
-		Username:   ctx.EffectiveUser.Username,
-	}
+func CommandStart(b *gotgbot.Bot, c *ext.Context) error {
 
-	err := model.CreateUser(&user)
+	_, err := helper.DB.User.CreateOne(
+		db.User.TelegramID.Set(int(c.EffectiveUser.Id)),
+		db.User.FirstName.Set(c.EffectiveUser.FirstName),
+		db.User.LastName.Set(c.EffectiveUser.LastName),
+		db.User.Username.Set(c.EffectiveUser.Username),
+	).Exec(context.Background())
 
 	if err != nil {
-		ctx.Message.Reply(b, "Error Happened", nil)
-		return err
+		return misc.ErrorHandler(b, c, err)
 	}
 
-	_, err = ctx.Message.Reply(b, "Hey!", &gotgbot.SendMessageOpts{
+	_, err = c.Message.Reply(b, "Hey!", &gotgbot.SendMessageOpts{
 		ReplyMarkup: new(
 			keyboard.Keyboard,
 		).Text(
@@ -31,6 +32,10 @@ func CommandStart(b *gotgbot.Bot, ctx *ext.Context) error {
 			"text",
 		).Build(),
 	})
+
+	if err != nil {
+		return misc.ErrorHandler(b, c, err)
+	}
 
 	return nil
 }

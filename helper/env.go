@@ -1,4 +1,4 @@
-package helpers
+package helper
 
 import (
 	"github.com/go-playground/validator/v10"
@@ -12,8 +12,7 @@ import (
 
 type env struct {
 	BotToken      string `validate:"required" json:"BOT_TOKEN"`
-	PostgresUri   string `validate:"required" json:"POSTGRES_URI"`
-	AdminIds      string `validate:"required" json:"ADMIN_IDS"`
+	SudoAdmins    string `validate:"required" json:"SUDO_ADMINS"`
 	PROD          bool   `validate:"boolean" json:"PROD"`
 	WebhookUrl    string `validate:"required_if=PROD true" json:"WEBHOOK_URL"`
 	WebhookSecret string `validate:"required_if=PROD true" json:"WEBHOOK_SECRET"`

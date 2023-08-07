@@ -1,22 +1,22 @@
 package commands
 
 import (
-	"bot/model"
+	"bot/handlers/misc"
+	"bot/helper"
+	"context"
 	"fmt"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
+	"log"
 	"strings"
 	"time"
 )
 
 func CommandBroadcast(b *gotgbot.Bot, c *ext.Context) error {
-	users, err := model.GetAllUsers()
+
+	allUsers, err := helper.DB.User.FindMany().Exec(context.Background())
 	if err != nil {
-		_, err := c.Message.Reply(b, "Error Happened", nil)
-		if err != nil {
-			return err
-		}
-		return err
+		return misc.ErrorHandler(b, c, err)
 	}
 
 	msg := strings.Join(c.Args()[1:], " ")
@@ -25,21 +25,21 @@ func CommandBroadcast(b *gotgbot.Bot, c *ext.Context) error {
 		return nil
 	}
 
-	c.Message.Reply(b, "Broadcasting...", nil)
+	_, _ = c.Message.Reply(b, "Broadcasting...", nil)
 
 	totalSend := 0
-	for _, user := range users {
-		_, err = b.SendMessage(user.TelegramId, msg, nil)
+	for _, user := range allUsers {
+		_, err = b.SendMessage(int64(user.TelegramID), msg, nil)
 		if err != nil {
-			c.Message.Reply(b, "Error Happened", nil)
-			return err
+			log.Printf("Error sending message to %d: %s", user.TelegramID, err)
+			continue
 		}
 		totalSend++
 		time.Sleep(100 * time.Millisecond)
 	}
 
 	msg = fmt.Sprintf("Broadcasted to %d users", totalSend)
-	c.Message.Reply(b, msg, nil)
+	_, _ = c.Message.Reply(b, msg, nil)
 
 	return nil
 }

@@ -1,4 +1,4 @@
-package helpers
+package helper
 
 import (
 	"github.com/PaulSonOfLars/gotgbot/v2"

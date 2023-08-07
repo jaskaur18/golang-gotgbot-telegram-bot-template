@@ -4,13 +4,31 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="Added Webhook Support For Production">
+    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="small improvement">
+      <change afterPath="$PROJECT_DIR$/db/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handlers/callBackQuery.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handlers/misc/errorHandler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helper/constants.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helper/db.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/middlewares/isAdmin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/20230807111528_prod/migration.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/migration_lock.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/schema.prisma" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/command_start.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/commands/broadcast.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/commands/broadcast.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/commands/start.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/commands/start.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/env.go" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/env.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/handlers.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/constants.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/env.go" beforeDir="false" afterPath="$PROJECT_DIR$/helper/env.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/launch.go" beforeDir="false" afterPath="$PROJECT_DIR$/helper/launch.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/misc.go" beforeDir="false" afterPath="$PROJECT_DIR$/helper/misc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/db.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/user.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +49,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
   <component name="ProjectId" id="2PLaJsQusXvh3ZxzjajgaBV8jZg" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -47,12 +68,13 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.automatic.dependencies.download": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/Users/honey/Projects/Golang/Telegram-Related/Telegram_Bots/Boilerplates/Golang-TgBot-template",
+    "last_opened_file_path": "/Users/honey/Projects/Golang/Telegram-Related/Telegram_Bots/Boilerplates/Golang-TgBot-template/handlers",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -61,6 +83,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/handlers" />
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -68,6 +91,12 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="Golang-TgBot-template" />
       <working_directory value="$PROJECT_DIR$" />
@@ -93,17 +122,6 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
-      <deployment type="dockerfile">
-        <settings />
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Docker.Dockerfile" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,7 +132,8 @@
     <MESSAGE value="Added Database" />
     <MESSAGE value="minor fix" />
     <MESSAGE value="Added Webhook Support For Production" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Webhook Support For Production" />
+    <MESSAGE value="small improvement" />
+    <option name="LAST_COMMIT_MESSAGE" value="small improvement" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

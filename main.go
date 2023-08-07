@@ -2,8 +2,7 @@ package main
 
 import (
 	"bot/handlers"
-	"bot/helpers"
-	"bot/model"
+	"bot/helper"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"log"
@@ -11,13 +10,13 @@ import (
 )
 
 func init() {
-	helpers.InitEnv()
-	helpers.InitConstants()
-	model.InitDB()
+	helper.InitEnv()
+	helper.InitConstants()
+	helper.NewDatabase()
 }
 
 func main() {
-	bot, err := gotgbot.NewBot(helpers.Env.BotToken, &gotgbot.BotOpts{
+	bot, err := gotgbot.NewBot(helper.Env.BotToken, &gotgbot.BotOpts{
 		Client: http.Client{},
 		DefaultRequestOpts: &gotgbot.RequestOpts{
 			Timeout: gotgbot.DefaultTimeout,
@@ -42,14 +41,14 @@ func main() {
 	})
 	handlers.Load(updater.Dispatcher)
 
-	if helpers.Env.PROD {
-		helpers.ProdLaunch(bot, updater)
+	if helper.Env.PROD {
+		helper.ProdLaunch(bot, updater)
 	} else {
-		helpers.DevLaunch(bot, updater)
+		helper.DevLaunch(bot, updater)
 	}
 
 	log.Println("🔥 Bot Is Running 🔥")
 	log.Printf("🔗 Bot Username: @%s\n", bot.Username)
-	log.Printf("🆔 Admin Ids: %v\n", helpers.Env.AdminIds)
+	log.Printf("🆔 SudoAdmins: %v\n", helper.Env.SudoAdmins)
 	updater.Idle()
 }
