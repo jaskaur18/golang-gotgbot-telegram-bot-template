@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"bot/handlers/commands"
+
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 )
@@ -17,6 +18,11 @@ var CommandsList = []Commands{
 		Name:    "start",
 		Allowed: User,
 		Handler: commands.CommandStart,
+	},
+	{
+		Name:    "adin",
+		Allowed: User,
+		Handler: commands.HandleAdmin,
 	},
 	{
 		Name:    "broadcast",

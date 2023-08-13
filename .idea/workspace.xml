@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="major change - change from gorm orm to prisma&#10;middleware for admin checks and other (WIP)&#10;and other minor changes">
+    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="update .env.sample">
       <change afterPath="$PROJECT_DIR$/migrations/20230807111528_prod/migration.sql" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/migrations/migration_lock.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.air.toml" beforeDir="false" afterPath="$PROJECT_DIR$/.air.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.sample" beforeDir="false" afterPath="$PROJECT_DIR$/.env.sample" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -115,7 +113,8 @@
     <MESSAGE value="Added Webhook Support For Production" />
     <MESSAGE value="small improvement" />
     <MESSAGE value="major change - change from gorm orm to prisma&#10;middleware for admin checks and other (WIP)&#10;and other minor changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="major change - change from gorm orm to prisma&#10;middleware for admin checks and other (WIP)&#10;and other minor changes" />
+    <MESSAGE value="update .env.sample" />
+    <option name="LAST_COMMIT_MESSAGE" value="update .env.sample" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
