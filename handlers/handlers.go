@@ -27,6 +27,10 @@ func Load(dp *ext.Dispatcher) {
 		dp.AddHandler(cb)
 	}
 
+	//Filters (Messages)
+	msgFilter := handlers.NewMessage(FilterText, HandleTextFilters)
+	dp.AddHandler(msgFilter)
+
 	//dp.AddHandler(handlers.NewMessage(MessageFilter, TextHandlers))
 
 }

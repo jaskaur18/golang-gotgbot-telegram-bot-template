@@ -2,9 +2,11 @@ package helper
 
 import (
 	"strings"
+	"time"
 )
 
 var SudoAdmins = map[int64]bool{}
+var RedisTimeOut = 10 * time.Second
 
 func InitConstants() {
 	sIDs := strings.Split(Env.SudoAdmins, ",")

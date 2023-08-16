@@ -13,63 +13,94 @@ import (
 )
 
 func HandleAdmin(b *gotgbot.Bot, c *ext.Context) error {
+	// Check if the user is authorized to use this command
 	if !helper.SudoAdmins[c.EffectiveUser.Id] {
-		_, err := c.EffectiveMessage.Reply(b, "You are not allowed to use this command", nil)
-		return err
+		_, _ = c.EffectiveMessage.Reply(b, "You are not allowed to use this command", nil)
+		return nil
 	}
 
+	// Parse command arguments
 	args := c.Args()
-	if len(args) < 3 {
-		_, err := c.EffectiveMessage.Reply(b, "Usage: /admin id true/false", nil)
-		return err
+	if len(args) < 2 {
+		_, _ = c.EffectiveMessage.Reply(b, "Usage: /admin id true/false", nil)
+		return nil
 	}
 
-	userId := args[0]
-	userIdInt, err := strconv.Atoi(userId)
-	if err != nil {
-		_, err := c.EffectiveMessage.Reply(b, "Please provide a valid user id", nil)
-		return err
+	// Parse the target user identifier
+	userIdentifier := args[1]
+	userIdInt := 0
+	newAdminStatusStr := ""
+
+	// Check if userIdentifier is an integer (user ID)
+	if id, err := strconv.Atoi(userIdentifier); err == nil {
+		userIdInt = id
+		if len(args) >= 3 {
+			newAdminStatusStr = strings.ToLower(args[2])
+		} else {
+			_, _ = c.EffectiveMessage.Reply(b, "Usage: /admin id true/false", nil)
+			return nil
+		}
+	} else if strings.HasPrefix(userIdentifier, "@") {
+		// Handle the case when the identifier starts with @
+		// If replying to a forwarded message, get user ID from the forwarded message
+		if c.EffectiveMessage.ReplyToMessage != nil {
+			userIdInt = int(c.EffectiveMessage.ReplyToMessage.From.Id)
+			if len(args) >= 2 {
+				newAdminStatusStr = strings.ToLower(args[1])
+			} else {
+				_, _ = c.EffectiveMessage.Reply(b, "Usage: /admin @username true/false", nil)
+				return nil
+			}
+		} else {
+			_, _ = c.EffectiveMessage.Reply(b, "Please reply to a forwarded message to identify the user", nil)
+			return nil
+		}
+	} else {
+		_, _ = c.EffectiveMessage.Reply(b, "Please provide a valid user identifier (ID or @username)", nil)
+		return nil
 	}
 
+	// Find the target user
 	targetUser, err := helper.DB.User.FindFirst(db.User.TelegramID.Equals(userIdInt)).Exec(context.Background())
 	if err != nil || targetUser == nil {
-		_, err := c.EffectiveMessage.Reply(b, "User not found", nil)
-		return err
+		_, _ = c.EffectiveMessage.Reply(b, "User not found", nil)
+		return nil
 	}
 
-	newAdminStatusStr := strings.ToLower(args[1])
+	// Parse the new admin status
 	if newAdminStatusStr != "true" && newAdminStatusStr != "false" {
-		_, err := c.EffectiveMessage.Reply(b, "Invalid admin status, use 'true' or 'false'", nil)
-		return err
+		_, _ = c.EffectiveMessage.Reply(b, "Invalid admin status, use 'true' or 'false'", nil)
+		return nil
 	}
-
 	newAdminStatus := newAdminStatusStr == "true"
 	currentAdminStatus := targetUser.UserType == db.UserTypeADMIN
 
+	// Check if the new status is the same as the current status
 	if newAdminStatus == currentAdminStatus {
 		adminType := "admin"
 		if !newAdminStatus {
 			adminType = "normal user"
 		}
-		_, err := c.EffectiveMessage.Reply(b, fmt.Sprintf("User %s is already an %s", userId, adminType), nil)
-		return err
+		_, _ = c.EffectiveMessage.Reply(b, fmt.Sprintf("User %s is already an %s", userIdentifier, adminType), nil)
+		return nil
 	}
 
+	// Update the user's admin status
 	_, err = helper.DB.User.FindMany(db.User.TelegramID.Equals(userIdInt)).Update(
 		db.User.UserType.Set(db.UserTypeADMIN),
 	).Exec(context.Background())
 
 	if err != nil {
-		_, err := c.EffectiveMessage.Reply(b, "Error updating user's admin status", nil)
-		return err
+		_, _ = c.EffectiveMessage.Reply(b, "Error updating user's admin status", nil)
+		return nil
 	}
 
+	// Construct and send success message
 	adminType := "admin"
 	if !newAdminStatus {
 		adminType = "normal user"
 	}
-
-	msg := fmt.Sprintf("User %s is now a %s", userId, adminType)
-	_, err = c.EffectiveMessage.Reply(b, msg, nil)
-	return err
+	msg := fmt.Sprintf("User %s is now a %s", userIdentifier, adminType)
+	_, _ = c.EffectiveMessage.Reply(b, msg, nil)
+	return nil
 }

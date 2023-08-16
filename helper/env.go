@@ -1,18 +1,20 @@
 package helper
 
 import (
-	"github.com/go-playground/validator/v10"
-	"github.com/joho/godotenv"
 	"log"
 	"os"
 	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/joho/godotenv"
 )
 
 type env struct {
 	BotToken      string `validate:"required" json:"BOT_TOKEN"`
 	SudoAdmins    string `validate:"required" json:"SUDO_ADMINS"`
+	RedisUri      string `validate:"required" json:"REDIS_URI"`
 	PROD          bool   `validate:"boolean" json:"PROD"`
 	WebhookUrl    string `validate:"required_if=PROD true" json:"WEBHOOK_URL"`
 	WebhookSecret string `validate:"required_if=PROD true" json:"WEBHOOK_SECRET"`

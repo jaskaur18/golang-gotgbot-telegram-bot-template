@@ -3,16 +3,18 @@ package main
 import (
 	"bot/handlers"
 	"bot/helper"
-	"github.com/PaulSonOfLars/gotgbot/v2"
-	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"log"
 	"net/http"
+
+	"github.com/PaulSonOfLars/gotgbot/v2"
+	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 )
 
 func init() {
 	helper.InitEnv()
 	helper.InitConstants()
 	helper.NewDatabase()
+	helper.InitRedis()
 }
 
 func main() {
