@@ -3,11 +3,12 @@ package main
 import (
 	"bot/handlers"
 	"bot/helper"
-	"log"
-	"net/http"
-
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
+	"log"
+	"log/slog"
+	"net/http"
+	"os"
 )
 
 func init() {
@@ -15,9 +16,13 @@ func init() {
 	helper.InitConstants()
 	helper.NewDatabase()
 	helper.InitRedis()
+
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+	slog.SetDefault(logger)
 }
 
 func main() {
+
 	bot, err := gotgbot.NewBot(helper.Env.BotToken, &gotgbot.BotOpts{
 		Client: http.Client{},
 		DefaultRequestOpts: &gotgbot.RequestOpts{
@@ -33,7 +38,7 @@ func main() {
 	// Create updater and dispatcher.
 	updater := ext.NewUpdater(&ext.UpdaterOpts{
 		Dispatcher: ext.NewDispatcher(&ext.DispatcherOpts{
-			// If an error is returned by a handler, log it and continue going.
+			// If a handler returns an error, log it and continue going.
 			Error: func(b *gotgbot.Bot, ctx *ext.Context, err error) ext.DispatcherAction {
 				log.Println("an error occurred while handling update:", err.Error())
 				return ext.DispatcherActionNoop
@@ -41,7 +46,7 @@ func main() {
 			MaxRoutines: ext.DefaultMaxRoutines,
 		}),
 	})
-	handlers.Load(updater.Dispatcher)
+	handlers.LoadHandlers(updater.Dispatcher)
 
 	if helper.Env.PROD {
 		helper.ProdLaunch(bot, updater)

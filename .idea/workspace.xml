@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="update .env.sample">
-      <change afterPath="$PROJECT_DIR$/migrations/20230807111528_prod/migration.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrations/migration_lock.toml" afterDir="false" />
+    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="added level access so can restrict commands to a particular user level">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/filter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/handlers.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middlewares/isAdmin.go" beforeDir="false" afterPath="$PROJECT_DIR$/middlewares/isAdmin.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +117,8 @@
     <MESSAGE value="small improvement" />
     <MESSAGE value="major change - change from gorm orm to prisma&#10;middleware for admin checks and other (WIP)&#10;and other minor changes" />
     <MESSAGE value="update .env.sample" />
-    <option name="LAST_COMMIT_MESSAGE" value="update .env.sample" />
+    <MESSAGE value="added level access so can restrict commands to a particular user level" />
+    <option name="LAST_COMMIT_MESSAGE" value="added level access so can restrict commands to a particular user level" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

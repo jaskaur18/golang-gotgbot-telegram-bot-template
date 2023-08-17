@@ -6,28 +6,11 @@ import (
 )
 
 type TextFilter struct {
-	Text    string
-	Handler func(b *gotgbot.Bot, ctx *ext.Context) error
-}
-
-func FilterText(msg *gotgbot.Message) bool {
-	for _, filter := range TextFilters {
-		if msg.Text == filter.Text {
-			return true
-		}
-	}
-	return false
+	Text     string
+	LevelReq AccessLevel
+	Handler  func(b *gotgbot.Bot, ctx *ext.Context) error
 }
 
 var TextFilters = []TextFilter{
 	{},
-}
-
-func HandleTextFilters(b *gotgbot.Bot, ctx *ext.Context) error {
-	for _, filter := range TextFilters {
-		if ctx.EffectiveMessage.Text == filter.Text {
-			return filter.Handler(b, ctx)
-		}
-	}
-	return nil
 }

@@ -10,11 +10,15 @@ import (
 func IsAdmin(msg *gotgbot.Message) bool {
 	tgId := msg.From.Id
 
+	if IsSudoAdmin(msg) {
+		return true
+	}
+
 	_, err := helper.DB.User.FindFirst(
 		db.User.TelegramID.Equals(int(tgId)),
 	).Exec(context.Background())
 
-	if err != nil && !IsSudoAdmin(msg) {
+	if err != nil {
 		return false
 	}
 
