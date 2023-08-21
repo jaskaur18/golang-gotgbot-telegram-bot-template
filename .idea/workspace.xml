@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="added level access so can restrict commands to a particular user level">
+    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="Updated README.md">
+      <change afterPath="$PROJECT_DIR$/tools/install-linux.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/command.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +115,8 @@
     <MESSAGE value="major change - change from gorm orm to prisma&#10;middleware for admin checks and other (WIP)&#10;and other minor changes" />
     <MESSAGE value="update .env.sample" />
     <MESSAGE value="added level access so can restrict commands to a particular user level" />
-    <option name="LAST_COMMIT_MESSAGE" value="added level access so can restrict commands to a particular user level" />
+    <MESSAGE value="Updated README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated README.md" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

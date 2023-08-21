@@ -20,7 +20,7 @@ var CommandsList = []Commands{
 		Handler:  commands.CommandStart,
 	},
 	{
-		Name:     "adin",
+		Name:     "admin",
 		LevelReq: User,
 		Handler:  commands.HandleAdmin,
 	},
