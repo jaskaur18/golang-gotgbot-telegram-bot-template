@@ -28,11 +28,11 @@ func HandleAdmin(b *gotgbot.Bot, c *ext.Context) error {
 
 	// Parse the target user identifier
 	userIdentifier := args[1]
-	userIdInt := 0
+	var userIdInt int64
 	newAdminStatusStr := ""
 
 	// Check if userIdentifier is an integer (user ID)
-	if id, err := strconv.Atoi(userIdentifier); err == nil {
+	if id, err := strconv.ParseInt(userIdentifier, 10, 64); err == nil {
 		userIdInt = id
 		if len(args) >= 3 {
 			newAdminStatusStr = strings.ToLower(args[2])
@@ -44,7 +44,7 @@ func HandleAdmin(b *gotgbot.Bot, c *ext.Context) error {
 		// Handle the case when the identifier starts with @
 		// If replying to a forwarded message, get user ID from the forwarded message
 		if c.EffectiveMessage.ReplyToMessage != nil {
-			userIdInt = int(c.EffectiveMessage.ReplyToMessage.From.Id)
+			userIdInt = c.EffectiveMessage.ReplyToMessage.From.Id
 			if len(args) >= 2 {
 				newAdminStatusStr = strings.ToLower(args[1])
 			} else {
@@ -61,7 +61,7 @@ func HandleAdmin(b *gotgbot.Bot, c *ext.Context) error {
 	}
 
 	// Find the target user
-	targetUser, err := helper.DB.User.FindFirst(db.User.TelegramID.Equals(userIdInt)).Exec(context.Background())
+	targetUser, err := helper.DB.User.FindFirst(db.User.TelegramID.Equals(db.BigInt(userIdInt))).Exec(context.Background())
 	if err != nil || targetUser == nil {
 		_, _ = c.EffectiveMessage.Reply(b, "User not found", nil)
 		return nil
@@ -73,7 +73,7 @@ func HandleAdmin(b *gotgbot.Bot, c *ext.Context) error {
 		return nil
 	}
 	newAdminStatus := newAdminStatusStr == "true"
-	currentAdminStatus := targetUser.UserType == db.UserTypeADMIN
+	currentAdminStatus := targetUser.UserType == db.UserTypeAdmin
 
 	// Check if the new status is the same as the current status
 	if newAdminStatus == currentAdminStatus {
@@ -86,8 +86,8 @@ func HandleAdmin(b *gotgbot.Bot, c *ext.Context) error {
 	}
 
 	// Update the user's admin status
-	_, err = helper.DB.User.FindMany(db.User.TelegramID.Equals(userIdInt)).Update(
-		db.User.UserType.Set(db.UserTypeADMIN),
+	_, err = helper.DB.User.FindMany(db.User.TelegramID.Equals(db.BigInt(userIdInt))).Update(
+		db.User.UserType.Set(db.UserTypeAdmin),
 	).Exec(context.Background())
 
 	if err != nil {

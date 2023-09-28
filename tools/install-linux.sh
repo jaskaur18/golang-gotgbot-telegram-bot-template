@@ -41,6 +41,7 @@ configure_postgresql() {
 
 # Function to install Node.js using fnm
 install_nodejs() {
+
   if ! fnm list-remote | grep -q "$1"; then
     echo "Installing Node.js $1 using fnm..."
     fnm install "$1"
@@ -105,6 +106,12 @@ if ! configure_postgresql "$pg_username" "$pg_password"; then
   echo "Error configuring PostgreSQL"
   exit 1
 fi
+
+bash -c "$(curl -fsSL https://fnm.vercel.app/install)"
+
+echo 'export PATH="/root/.local/share/fnm:$PATH"' >>~/.bashrc
+echo 'eval "`fnm env`"'
+source ~/.bashrc
 
 install_nodejs "20"
 

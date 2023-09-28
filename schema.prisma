@@ -14,7 +14,7 @@ enum UserType {
 
 model User {
   id         String   @id @default(cuid())
-  telegramID Int      @unique
+  telegramID BigInt   @unique
   firstName  String
   lastName   String
   username   String   @default("none")

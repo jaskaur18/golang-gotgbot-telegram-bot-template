@@ -20,6 +20,11 @@ var CommandsList = []Commands{
 		Handler:  commands.CommandStart,
 	},
 	{
+		Name:     "lang",
+		LevelReq: User,
+		Handler:  commands.HandleLanguage,
+	},
+	{
 		Name:     "admin",
 		LevelReq: User,
 		Handler:  commands.HandleAdmin,

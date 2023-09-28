@@ -8,6 +8,7 @@ import (
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers/filters/callbackquery"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers/filters/message"
+	"strings"
 )
 
 type AccessLevel int
@@ -61,7 +62,7 @@ func HandleTextMessageFilter(b *gotgbot.Bot, c *ext.Context) error {
 func handleCommand(b *gotgbot.Bot, c *ext.Context) error {
 	text := c.EffectiveMessage.Text
 	for _, cmd := range CommandsList {
-		if cmd.Name == text {
+		if strings.HasPrefix(text, fmt.Sprintf("/%s", cmd.Name)) {
 			if cmd.LevelReq == Admin && !middlewares.IsAdmin(c.EffectiveMessage) {
 				return handleNotAllowed(b, c, "admin")
 			} else if cmd.LevelReq == SudoAdmin && !middlewares.IsSudoAdmin(c.EffectiveMessage) {

@@ -5,25 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/redis/go-redis/v9"
 	"log"
 	"strconv"
-
-	"github.com/redis/go-redis/v9"
 )
 
 type Session struct {
-	TelegramID    int64  `json:"-"`
-	Name          string `json:"name"`
-	Desc          string `json:"desc"`
-	DepositAmount int    `json:"depositAmount"`
-
-	ApiUrlsAndStatus []struct {
-		APIUrl    string
-		StatusUrl string
-	} `json:"apiUrlsAndStatus"`
-
-	Public    bool   `json:"public"`
-	ServiceID string `json:"serviceId"`
+	TelegramID int64  `json:"-"`
+	Language   string `json:"language"`
 }
 
 func GetSession(telegramId int64) (*Session, error) {
@@ -31,14 +20,15 @@ func GetSession(telegramId int64) (*Session, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), RedisTimeOut)
 	defer cancel()
 
-	key := strconv.FormatInt(telegramId, 10)
+	key := fmt.Sprintf("%d", telegramId)
 
 	data, err := Redis.Get(ctx, key).Result()
 	if err != nil {
+		log.Printf("Error getting session: %v", err)
 		// Check if the error is due to key not found in Redis.
 		if err == redis.Nil {
 			// Create an empty session and save it to Redis.
-			emptySession := &Session{TelegramID: telegramId}
+			emptySession := &Session{TelegramID: telegramId, Language: "en"}
 			err := emptySession.Save() // Save empty session to Redis
 			if err != nil {
 				return nil, err
@@ -51,12 +41,17 @@ func GetSession(telegramId int64) (*Session, error) {
 
 	err = json.Unmarshal([]byte(data), &session)
 	if err != nil {
-		// Handle unmarshal error here.
-		err = Redis.Del(ctx, key).Err()
-		if err != nil {
-			log.Printf("Error deleting session: %v", err)
+		// If unmarshal fails, it's assumed the data format has changed.
+		log.Printf("Error unmarshalling session. Possibly due to data format change: %v", err)
+
+		// Delete the key from Redis
+		errDelete := Redis.Del(ctx, key).Err()
+		if errDelete != nil {
+			log.Printf("Error deleting session from Redis: %v", errDelete)
 		}
-		return &session, err
+
+		// Return a fresh session with default language
+		return &Session{TelegramID: telegramId, Language: "en"}, nil
 	}
 
 	session.TelegramID = telegramId

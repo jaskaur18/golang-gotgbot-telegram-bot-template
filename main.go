@@ -3,11 +3,11 @@ package main
 import (
 	"bot/handlers"
 	"bot/helper"
+	"bot/middlewares"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"log"
 	"log/slog"
-	"net/http"
 	"os"
 )
 
@@ -24,11 +24,7 @@ func init() {
 func main() {
 
 	bot, err := gotgbot.NewBot(helper.Env.BotToken, &gotgbot.BotOpts{
-		Client: http.Client{},
-		DefaultRequestOpts: &gotgbot.RequestOpts{
-			Timeout: gotgbot.DefaultTimeout,
-			APIURL:  gotgbot.DefaultAPIURL,
-		},
+		BotClient: middlewares.NewI18nClient(),
 	})
 	if err != nil {
 		log.Fatal("Error creating bot: ", err)
@@ -46,6 +42,7 @@ func main() {
 			MaxRoutines: ext.DefaultMaxRoutines,
 		}),
 	})
+
 	handlers.LoadHandlers(updater.Dispatcher)
 
 	if helper.Env.PROD {

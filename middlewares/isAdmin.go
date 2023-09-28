@@ -15,7 +15,7 @@ func IsAdmin(msg *gotgbot.Message) bool {
 	}
 
 	_, err := helper.DB.User.FindFirst(
-		db.User.TelegramID.Equals(int(tgId)),
+		db.User.TelegramID.Equals(db.BigInt(tgId)),
 	).Exec(context.Background())
 
 	if err != nil {
