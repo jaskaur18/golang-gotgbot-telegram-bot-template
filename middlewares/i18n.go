@@ -1,10 +1,10 @@
 package middlewares
 
 import (
-	"bot/helper"
 	"context"
 	"encoding/json"
 	"github.com/PaulSonOfLars/gotgbot/v2"
+	"github.com/jaskaur18/moimoiStoreBot/bots/storeBot/helper"
 	"log"
 	"net/http"
 	"strconv"

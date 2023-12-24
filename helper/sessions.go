@@ -5,14 +5,21 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/jaskaur18/moimoiStoreBot/types"
 	"github.com/redis/go-redis/v9"
 	"log"
 	"strconv"
 )
 
 type Session struct {
-	TelegramID int64  `json:"-"`
-	Language   string `json:"language"`
+	TelegramID     int64                `json:"-"`
+	ReferralCode   int64                `json:"referral_code"`
+	DealOpen       bool                 `json:"deal_open"`
+	ProductID      string               `json:"product_id"`
+	PhoneNumber    string               `json:"phone_number"`
+	ProductStepper int                  `json:"product_stepper"`
+	ProductSteps   []types.ProductSteps `json:"product_steps"`
+	Language       string               `json:"language"`
 }
 
 func GetSession(telegramId int64) (*Session, error) {
@@ -26,9 +33,11 @@ func GetSession(telegramId int64) (*Session, error) {
 	if err != nil {
 		log.Printf("Error getting session: %v", err)
 		// Check if the error is due to key not found in Redis.
-		if err == redis.Nil {
+		if errors.Is(err, redis.Nil) {
 			// Create an empty session and save it to Redis.
-			emptySession := &Session{TelegramID: telegramId, Language: "en"}
+			emptySession := &Session{
+				TelegramID: telegramId, Language: "en", ProductStepper: 0,
+				ProductSteps: []types.ProductSteps{}, DealOpen: false}
 			err := emptySession.Save() // Save empty session to Redis
 			if err != nil {
 				return nil, err

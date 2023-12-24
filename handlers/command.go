@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"bot/handlers/commands"
-
 	"github.com/PaulSonOfLars/gotgbot/v2"
+	"github.com/jaskaur18/moimoiStoreBot/bots/storeBot/handlers/commands"
+
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 )
 
@@ -14,11 +14,7 @@ type Commands struct {
 }
 
 var CommandsList = []Commands{
-	{
-		Name:     "start",
-		LevelReq: User,
-		Handler:  commands.CommandStart,
-	},
+
 	{
 		Name:     "lang",
 		LevelReq: User,

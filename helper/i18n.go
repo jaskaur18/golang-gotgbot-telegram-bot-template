@@ -15,8 +15,8 @@ var bundles = make(map[string]*fluent.Bundle)
 
 func init() {
 	// Load locales from the locales directory
-	locales := getLocales("locales")
-	loadLocales("locales", locales)
+	locales := getLocales(filepath.Join("bots", "storeBot", "locales"))
+	loadLocales(filepath.Join("bots", "storeBot", "locales"), locales)
 }
 
 func getLocales(root string) []string {

@@ -1,13 +1,14 @@
 package handlers
 
 import (
-	"bot/middlewares"
 	"fmt"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers/filters/callbackquery"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers/filters/message"
+	"github.com/jaskaur18/moimoiStoreBot/bots/storeBot/handlers/conv"
+	"github.com/jaskaur18/moimoiStoreBot/bots/storeBot/middlewares"
 	"strings"
 )
 
@@ -20,6 +21,11 @@ const (
 )
 
 func LoadHandlers(dp *ext.Dispatcher) {
+	//Ban Check
+	dp.AddHandler(handlers.NewMessage(middlewares.IsBan, middlewares.HandleBan))
+	dp.AddHandler(handlers.NewMessage(middlewares.IsDealOpen, middlewares.DealHandler))
+	dp.AddHandler(conv.UserJoin)
+	dp.AddHandler(conv.ProductStepperConv)
 	loadCallbackQueryHandlers(dp)
 	loadMessageFilterHandler(dp)
 }

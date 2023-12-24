@@ -5,7 +5,12 @@ import (
 	"time"
 )
 
+var SupportGuyUsername = "xxx"
+var AdminUsername = "xxx"
+var SupportBotUsername = "xxx"
+
 var SudoAdmins = map[int64]bool{}
+var BanUsers = map[int64]bool{}
 var RedisTimeOut = 10 * time.Second
 
 func InitConstants() {

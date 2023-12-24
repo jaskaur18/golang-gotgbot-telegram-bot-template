@@ -1,9 +1,9 @@
 package commands
 
 import (
-	"bot/helper"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
+	"github.com/jaskaur18/moimoiStoreBot/bots/storeBot/helper"
 )
 
 func HandleLanguage(b *gotgbot.Bot, c *ext.Context) error {

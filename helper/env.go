@@ -1,6 +1,7 @@
 package helper
 
 import (
+	"errors"
 	"log"
 	"os"
 	"reflect"
@@ -12,7 +13,7 @@ import (
 )
 
 type env struct {
-	BotToken      string `validate:"required" json:"BOT_TOKEN"`
+	BotToken      string `validate:"required" json:"STORE_BOT_TOKEN"`
 	SudoAdmins    string `validate:"required" json:"SUDO_ADMINS"`
 	RedisUri      string `validate:"required" json:"REDIS_URI"`
 	PROD          bool   `validate:"boolean" json:"PROD"`
@@ -58,7 +59,8 @@ func InitEnv() {
 
 	err = validate.Struct(Env)
 	if err != nil {
-		if _, ok := err.(*validator.InvalidValidationError); ok {
+		var invalidValidationError *validator.InvalidValidationError
+		if errors.As(err, &invalidValidationError) {
 			log.Fatal("Error validating environment variables: ", err)
 			return
 		}

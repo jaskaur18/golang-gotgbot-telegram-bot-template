@@ -2,15 +2,15 @@ package helper
 
 import (
 	"context"
-	"log"
-
+	"fmt"
 	"github.com/redis/go-redis/v9"
+	"log"
 )
 
 var Redis *redis.Client
 
 func InitRedis() {
-	opt, err := redis.ParseURL(Env.RedisUri)
+	opt, err := redis.ParseURL(fmt.Sprintf("%s/%s", Env.RedisUri, "0"))
 	if err != nil {
 		log.Fatal("Error parsing redis url: ", err)
 	}
