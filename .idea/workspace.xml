@@ -4,28 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="added install-linux.sh script">
-      <change afterPath="$PROJECT_DIR$/handlers/commands/language.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/helper/i18n.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locales/en/error.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locales/en/language.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locales/en/welcome.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locales/ru/error.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locales/ru/language.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locales/ru/welcome.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/middlewares/i18n.go" afterDir="false" />
+    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="Update i18n implementation, libraries and installation script&#10;&#10;Codebase updated to implement i18n system using gettext like interface. Also, updated library versions and the installation script to ensure project is building and running without issues. Additionally, some unneeded lines from the workspace xml file have been removed for clarity. In general, the project now has better internationalization support, allowing for easier translation into other languages.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/command.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/commands/admin.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/commands/admin.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/commands/start.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/commands/start.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/handlers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helper/sessions.go" beforeDir="false" afterPath="$PROJECT_DIR$/helper/sessions.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlewares/isAdmin.go" beforeDir="false" afterPath="$PROJECT_DIR$/middlewares/isAdmin.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/install-linux.sh" beforeDir="false" afterPath="$PROJECT_DIR$/tools/install-linux.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +115,8 @@
     <MESSAGE value="added level access so can restrict commands to a particular user level" />
     <MESSAGE value="Updated README.md" />
     <MESSAGE value="added install-linux.sh script" />
-    <option name="LAST_COMMIT_MESSAGE" value="added install-linux.sh script" />
+    <MESSAGE value="Update i18n implementation, libraries and installation script&#10;&#10;Codebase updated to implement i18n system using gettext like interface. Also, updated library versions and the installation script to ensure project is building and running without issues. Additionally, some unneeded lines from the workspace xml file have been removed for clarity. In general, the project now has better internationalization support, allowing for easier translation into other languages." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update i18n implementation, libraries and installation script&#10;&#10;Codebase updated to implement i18n system using gettext like interface. Also, updated library versions and the installation script to ensure project is building and running without issues. Additionally, some unneeded lines from the workspace xml file have been removed for clarity. In general, the project now has better internationalization support, allowing for easier translation into other languages." />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
