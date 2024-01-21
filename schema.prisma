@@ -1,0 +1,26 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator db {
+  provider = "go run github.com/steebchen/prisma-client-go"
+}
+
+enum UserType {
+  USER
+  ADMIN
+}
+
+model User {
+  id         String   @id @default(cuid())
+  telegramID Int      @unique
+  firstName  String
+  lastName   String
+  username   String   @default("none")
+  language   String   @default("en")
+  userType   UserType @default(USER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

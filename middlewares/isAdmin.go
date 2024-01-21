@@ -12,6 +12,7 @@ func IsAdmin(msg *gotgbot.Message) bool {
 		return true
 	}
 
+<<<<<<< HEAD
 	//_, err := helper.DB.User.FindFirst(
 	//	db.User.TelegramID.Equals(db.BigInt(tgId)),
 	//).Exec(context.Background())
@@ -19,6 +20,11 @@ func IsAdmin(msg *gotgbot.Message) bool {
 	//if err != nil {
 	//	return false
 	//}
+=======
+	_, err := helper.DB.User.FindFirst(
+		db.User.TelegramID.Equals(int(tgId)),
+	).Exec(context.Background())
+>>>>>>> parent of dc24b0d (Update i18n implementation, libraries and installation script)
 
 	return false
 }

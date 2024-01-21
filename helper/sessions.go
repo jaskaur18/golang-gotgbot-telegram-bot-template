@@ -5,13 +5,19 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+<<<<<<< HEAD
 	"github.com/jaskaur18/moimoiStoreBot/types"
 	"github.com/redis/go-redis/v9"
+=======
+>>>>>>> parent of dc24b0d (Update i18n implementation, libraries and installation script)
 	"log"
 	"strconv"
+
+	"github.com/redis/go-redis/v9"
 )
 
 type Session struct {
+<<<<<<< HEAD
 	TelegramID     int64                `json:"-"`
 	ReferralCode   int64                `json:"referral_code"`
 	DealOpen       bool                 `json:"deal_open"`
@@ -20,6 +26,20 @@ type Session struct {
 	ProductStepper int                  `json:"product_stepper"`
 	ProductSteps   []types.ProductSteps `json:"product_steps"`
 	Language       string               `json:"language"`
+=======
+	TelegramID    int64  `json:"-"`
+	Name          string `json:"name"`
+	Desc          string `json:"desc"`
+	DepositAmount int    `json:"depositAmount"`
+
+	ApiUrlsAndStatus []struct {
+		APIUrl    string
+		StatusUrl string
+	} `json:"apiUrlsAndStatus"`
+
+	Public    bool   `json:"public"`
+	ServiceID string `json:"serviceId"`
+>>>>>>> parent of dc24b0d (Update i18n implementation, libraries and installation script)
 }
 
 func GetSession(telegramId int64) (*Session, error) {
@@ -27,17 +47,20 @@ func GetSession(telegramId int64) (*Session, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), RedisTimeOut)
 	defer cancel()
 
-	key := fmt.Sprintf("%d", telegramId)
+	key := strconv.FormatInt(telegramId, 10)
 
 	data, err := Redis.Get(ctx, key).Result()
 	if err != nil {
-		log.Printf("Error getting session: %v", err)
 		// Check if the error is due to key not found in Redis.
 		if errors.Is(err, redis.Nil) {
 			// Create an empty session and save it to Redis.
+<<<<<<< HEAD
 			emptySession := &Session{
 				TelegramID: telegramId, Language: "en", ProductStepper: 0,
 				ProductSteps: []types.ProductSteps{}, DealOpen: false}
+=======
+			emptySession := &Session{TelegramID: telegramId}
+>>>>>>> parent of dc24b0d (Update i18n implementation, libraries and installation script)
 			err := emptySession.Save() // Save empty session to Redis
 			if err != nil {
 				return nil, err
@@ -50,17 +73,12 @@ func GetSession(telegramId int64) (*Session, error) {
 
 	err = json.Unmarshal([]byte(data), &session)
 	if err != nil {
-		// If unmarshal fails, it's assumed the data format has changed.
-		log.Printf("Error unmarshalling session. Possibly due to data format change: %v", err)
-
-		// Delete the key from Redis
-		errDelete := Redis.Del(ctx, key).Err()
-		if errDelete != nil {
-			log.Printf("Error deleting session from Redis: %v", errDelete)
+		// Handle unmarshal error here.
+		err = Redis.Del(ctx, key).Err()
+		if err != nil {
+			log.Printf("Error deleting session: %v", err)
 		}
-
-		// Return a fresh session with default language
-		return &Session{TelegramID: telegramId, Language: "en"}, nil
+		return &session, err
 	}
 
 	session.TelegramID = telegramId

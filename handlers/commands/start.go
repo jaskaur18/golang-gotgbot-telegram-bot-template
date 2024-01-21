@@ -1,8 +1,15 @@
 package commands
 
 import (
+<<<<<<< HEAD
 	"errors"
 	"fmt"
+=======
+	"bot/db"
+	"bot/handlers/misc"
+	"bot/helper"
+	"context"
+>>>>>>> parent of dc24b0d (Update i18n implementation, libraries and installation script)
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
@@ -21,6 +28,7 @@ func CommandStart(b *gotgbot.Bot, c *ext.Context) error {
 		"id": c.EffectiveUser.Id,
 	})
 
+<<<<<<< HEAD
 	if err != nil {
 		if apis.NewNotFoundError("", err) != nil {
 			_, err := helpers.PB.Dao().FindRecordsByFilter("tgUser", "", "created", 0, 0, dbx.Params{})
@@ -68,6 +76,27 @@ func CommandStart(b *gotgbot.Bot, c *ext.Context) error {
 	_, err = c.Message.Reply(b, "<code>-- Available Service List --</code>", &gotgbot.SendMessageOpts{
 		ParseMode:   "html",
 		ReplyMarkup: key,
+=======
+	_, err := helper.DB.User.CreateOne(
+		db.User.TelegramID.Set(int(c.EffectiveUser.Id)),
+		db.User.FirstName.Set(c.EffectiveUser.FirstName),
+		db.User.LastName.Set(c.EffectiveUser.LastName),
+		db.User.Username.Set(c.EffectiveUser.Username),
+	).Exec(context.Background())
+
+	if err != nil {
+		return misc.ErrorHandler(b, c, err)
+	}
+
+	_, err = c.Message.Reply(b, "Hey!", &gotgbot.SendMessageOpts{
+		ReplyMarkup: new(
+			keyboard.Keyboard,
+		).Text(
+			"text",
+		).RequestContact(
+			"text",
+		).Build(),
+>>>>>>> parent of dc24b0d (Update i18n implementation, libraries and installation script)
 	})
 
 	if err != nil {

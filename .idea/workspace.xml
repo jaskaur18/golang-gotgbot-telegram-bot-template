@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="Update i18n implementation, libraries and installation script&#10;&#10;Codebase updated to implement i18n system using gettext like interface. Also, updated library versions and the installation script to ensure project is building and running without issues. Additionally, some unneeded lines from the workspace xml file have been removed for clarity. In general, the project now has better internationalization support, allowing for easier translation into other languages.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="Updated README.md">
+      <change afterPath="$PROJECT_DIR$/tools/install-linux.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/command.go" afterDir="false" />
+>>>>>>> parent of dc24b0d (Update i18n implementation, libraries and installation script)
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,9 +121,13 @@
     <MESSAGE value="update .env.sample" />
     <MESSAGE value="added level access so can restrict commands to a particular user level" />
     <MESSAGE value="Updated README.md" />
+<<<<<<< HEAD
     <MESSAGE value="added install-linux.sh script" />
     <MESSAGE value="Update i18n implementation, libraries and installation script&#10;&#10;Codebase updated to implement i18n system using gettext like interface. Also, updated library versions and the installation script to ensure project is building and running without issues. Additionally, some unneeded lines from the workspace xml file have been removed for clarity. In general, the project now has better internationalization support, allowing for easier translation into other languages." />
     <option name="LAST_COMMIT_MESSAGE" value="Update i18n implementation, libraries and installation script&#10;&#10;Codebase updated to implement i18n system using gettext like interface. Also, updated library versions and the installation script to ensure project is building and running without issues. Additionally, some unneeded lines from the workspace xml file have been removed for clarity. In general, the project now has better internationalization support, allowing for easier translation into other languages." />
+=======
+    <option name="LAST_COMMIT_MESSAGE" value="Updated README.md" />
+>>>>>>> parent of dc24b0d (Update i18n implementation, libraries and installation script)
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

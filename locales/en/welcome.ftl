@@ -1,1 +1,0 @@
-welcome = <code>welcome to the bot</code>

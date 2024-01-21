@@ -7,9 +7,12 @@ import (
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers/filters/callbackquery"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers/filters/message"
+<<<<<<< HEAD
 	"github.com/jaskaur18/moimoiStoreBot/bots/storeBot/handlers/conv"
 	"github.com/jaskaur18/moimoiStoreBot/bots/storeBot/middlewares"
 	"strings"
+=======
+>>>>>>> parent of dc24b0d (Update i18n implementation, libraries and installation script)
 )
 
 type AccessLevel int
@@ -68,7 +71,7 @@ func HandleTextMessageFilter(b *gotgbot.Bot, c *ext.Context) error {
 func handleCommand(b *gotgbot.Bot, c *ext.Context) error {
 	text := c.EffectiveMessage.Text
 	for _, cmd := range CommandsList {
-		if strings.HasPrefix(text, fmt.Sprintf("/%s", cmd.Name)) {
+		if cmd.Name == text {
 			if cmd.LevelReq == Admin && !middlewares.IsAdmin(c.EffectiveMessage) {
 				return handleNotAllowed(b, c, "admin")
 			} else if cmd.LevelReq == SudoAdmin && !middlewares.IsSudoAdmin(c.EffectiveMessage) {

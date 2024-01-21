@@ -1,6 +1,11 @@
 package bot
 
 import (
+<<<<<<< HEAD
+=======
+	"bot/handlers"
+	"bot/helper"
+>>>>>>> parent of dc24b0d (Update i18n implementation, libraries and installation script)
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/jaskaur18/moimoiStoreBot/bots/storeBot/handlers"
@@ -8,6 +13,7 @@ import (
 	"github.com/jaskaur18/moimoiStoreBot/bots/storeBot/middlewares"
 	"log"
 	"log/slog"
+	"net/http"
 	"os"
 )
 
@@ -25,7 +31,11 @@ var BOT *gotgbot.Bot
 func InitStoreBot() {
 
 	bot, err := gotgbot.NewBot(helper.Env.BotToken, &gotgbot.BotOpts{
-		BotClient: middlewares.NewI18nClient(),
+		Client: http.Client{},
+		DefaultRequestOpts: &gotgbot.RequestOpts{
+			Timeout: gotgbot.DefaultTimeout,
+			APIURL:  gotgbot.DefaultAPIURL,
+		},
 	})
 	if err != nil {
 		log.Fatal("Error creating bot: ", err)
@@ -41,11 +51,15 @@ func InitStoreBot() {
 		},
 		MaxRoutines: ext.DefaultMaxRoutines,
 	})
+<<<<<<< HEAD
 
 	// Create updater and dispatcher.
 	updater := ext.NewUpdater(dispatcher, nil)
 
 	handlers.LoadHandlers(dispatcher)
+=======
+	handlers.LoadHandlers(updater.Dispatcher)
+>>>>>>> parent of dc24b0d (Update i18n implementation, libraries and installation script)
 
 	if helper.Env.PROD {
 		helper.ProdLaunch(bot, updater)

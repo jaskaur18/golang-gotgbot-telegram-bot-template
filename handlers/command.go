@@ -16,11 +16,6 @@ type Commands struct {
 var CommandsList = []Commands{
 
 	{
-		Name:     "lang",
-		LevelReq: User,
-		Handler:  commands.HandleLanguage,
-	},
-	{
 		Name:     "admin",
 		LevelReq: User,
 		Handler:  commands.HandleAdmin,
