@@ -1,5 +1,4 @@
-
 lang = Language
-invalidArgs = "Invalid arguments." - /lang <language>
+invalidLangArgs = "Invalid arguments." - /lang <language>
 invalidLang = Invalid language.
-success= = Language Has Been Updated
+langSuccess= = Language Has Been Updated

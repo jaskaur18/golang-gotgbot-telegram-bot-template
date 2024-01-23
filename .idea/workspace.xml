@@ -4,28 +4,71 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="added install-linux.sh script">
-      <change afterPath="$PROJECT_DIR$/handlers/commands/language.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/helper/i18n.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locales/en/error.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locales/en/language.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locales/en/welcome.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locales/ru/error.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locales/ru/language.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locales/ru/welcome.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/middlewares/i18n.go" afterDir="false" />
+    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="ReDone The Whole Template&#10;&#10;- Improve Code Structure &#10;- Refactor Code Making It More Flexible &#10;- Changed Orm From Prisma To SqlBoiler&#10;- Using TaskFile Now Instead Of Makefile&#10;- Improved i18n Localization System&#10;- Using Goose For Migration&#10;- Added Zerolog Library For Logging">
+      <change afterPath="$PROJECT_DIR$/.golangci.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/bot/bot.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/bot/init.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/config/bot_config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/config/db_config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/env/env.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/handlers/handlers.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/User.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/User_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/boil_main_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/boil_queries.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/boil_queries_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/boil_suites_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/boil_table_names.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/boil_types.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/boil_view_names.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/goose_db_version.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/goose_db_version_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/psql_main_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/psql_suites_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/psql_upsert.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/utils/db.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/utils/launch.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/utils/logging.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/1706034800_create_user_table.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/sql/default_zero_values.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/sql/fk_missing_index.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/sql/info.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sqlboiler.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.sample" beforeDir="false" afterPath="$PROJECT_DIR$/.env.sample" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/command.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/commands/admin.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/commands/admin.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/commands/start.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/commands/start.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/handlers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helper/sessions.go" beforeDir="false" afterPath="$PROJECT_DIR$/helper/sessions.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/callBackQuery.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/callBackQuery.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/commands/admin.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/commands/admin.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/commands/broadcast.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/commands/broadcast.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/commands/language.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/commands/language.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/commands/start.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/commands/start.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/filter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/handlers.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/misc/errorHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/misc/errorHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/constants.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/helper/constants.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/db.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/env.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/i18n.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/i18n.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/launch.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/misc.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/misc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/redis.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/sessions.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/sessions.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locales/en/language.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/locales/en/language.ftl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locales/en/welcome.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/locales/en/welcome.ftl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locales/ru/language.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/locales/ru/language.ftl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlewares/isAdmin.go" beforeDir="false" afterPath="$PROJECT_DIR$/middlewares/isAdmin.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/install-linux.sh" beforeDir="false" afterPath="$PROJECT_DIR$/tools/install-linux.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middlewares/i18n.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/middlewares/i18n.xxgo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middlewares/isAdmin.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/middlewares/isAdmin.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/20230807111528_prod/migration.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/migration_lock.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema.prisma" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/install-linux.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/install-linux.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,33 +100,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.automatic.dependencies.download&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/honey/Projects/Golang/Telegram-Related/Telegram_Bots/Boilerplates/Golang-TgBot-template/handlers&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.automatic.dependencies.download": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "v2",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "/Users/honey/Projects/Golang/Telegram-Related/Telegram_Bots/Boilerplates/Golang-TgBot-template/migrations",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/migrations" />
+      <recent name="$PROJECT_DIR$/tools" />
       <recent name="$PROJECT_DIR$/handlers" />
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/internal/utils" />
+      <recent name="$PROJECT_DIR$/cmd/bot" />
+      <recent name="$PROJECT_DIR$/internals" />
       <recent name="$PROJECT_DIR$/model" />
     </key>
   </component>
@@ -135,7 +183,8 @@
     <MESSAGE value="added level access so can restrict commands to a particular user level" />
     <MESSAGE value="Updated README.md" />
     <MESSAGE value="added install-linux.sh script" />
-    <option name="LAST_COMMIT_MESSAGE" value="added install-linux.sh script" />
+    <MESSAGE value="ReDone The Whole Template&#10;&#10;- Improve Code Structure &#10;- Refactor Code Making It More Flexible &#10;- Changed Orm From Prisma To SqlBoiler&#10;- Using TaskFile Now Instead Of Makefile&#10;- Improved i18n Localization System&#10;- Using Goose For Migration&#10;- Added Zerolog Library For Logging" />
+    <option name="LAST_COMMIT_MESSAGE" value="ReDone The Whole Template&#10;&#10;- Improve Code Structure &#10;- Refactor Code Making It More Flexible &#10;- Changed Orm From Prisma To SqlBoiler&#10;- Using TaskFile Now Instead Of Makefile&#10;- Improved i18n Localization System&#10;- Using Goose For Migration&#10;- Added Zerolog Library For Logging" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

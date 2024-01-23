@@ -1,1 +1,1 @@
-welcome = <code>welcome to the bot</code>
+welcome = <code>welcome to the bot {$name}</code>
