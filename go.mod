@@ -8,7 +8,6 @@ require (
 	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.22
 	github.com/cosmtrek/air v1.49.0
 	github.com/friendsofgo/errors v0.9.2
-	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/gotgbot/keyboard v1.0.0
 	github.com/joho/godotenv v1.5.1
 	github.com/kat-co/vala v0.0.0-20170210184112-42e1d8b61f12
@@ -54,8 +53,6 @@ require (
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
-	github.com/onsi/ginkgo v1.16.5 // indirect
-	github.com/onsi/gomega v1.31.1 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
