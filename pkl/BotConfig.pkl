@@ -1,0 +1,50 @@
+@go.Package { name = "github.com/jaskaur18/golang-gotgbot-telegram-bot-template/pkl/pklgen" }
+
+module botConfig.pkl
+
+import "package://pkg.pkl-lang.org/pkl-go/pkl.golang@0.5.3#/go.pkl"
+
+Bot: BOT
+DB: Database
+Logger: LOGGER
+const ENV: Environment = "dev"
+Misc: MISC
+
+class BOT {
+  Token: String = read("env:BOT_TOKEN")
+  SudoAdmins: List<Int32> = List()
+  WebhookUrl: String?(if (ENV == "prod") this != null else this == null) = if (ENV == "prod") read("env:WEBHOOK_URL") else null
+  WebhookSecret: String?(if (ENV == "prod") this != null else this == null) = if (ENV == "prod") read("env:WEBHOOK_SECRET") else null
+}
+
+class LOGGER {
+  Level: levels = "info"
+  RequestLevel: levels = "info"
+  LogRequestBody: Boolean = false
+  LogRequestHeaders: Boolean = false
+  LogRequestQuery: Boolean = false
+  LogResponseBody: Boolean = false
+  LogResponseHeaders: Boolean = false
+  LogCaller: Boolean = false
+  PrettyPrintConsole: Boolean = false
+}
+
+class Database {
+  PSQLDB: String = read("env:PSQL_DBNAME")
+  PSQLHOST: String(matches(Regex("^(localhost|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})$"))) = read("env:PSQL_HOST")
+  PSQLPORT: Int32 = 5432
+  PSQLUSER: String = read("env:PSQL_USER")
+  PSQLPASS: String = read("env:PSQL_PASS")
+  AdditionalParams: Map<String,String>
+  DBMaxOpenConns: Int32 = 10
+  MaxIdleConns: Int32 = 5
+  MinIdleConns: Int32 = 1
+  ConnectionMaxLifetime: Duration = 0.s
+}
+
+class MISC {
+  RedisURI: String
+}
+
+typealias levels = "debug"|"info"|"warn"|"error"|"fatal"|"panic"|"trace"|"disabled"|"nolevel"
+typealias Environment = "dev"|"qa"|"prod"

@@ -1,14 +1,14 @@
 package handlers
 
 import (
-	"bot/cmd/bot"
-	"bot/internal/middlewares"
 	"fmt"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers/filters/callbackquery"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers/filters/message"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/cmd/bot"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/middlewares"
 	"github.com/rs/zerolog/log"
 	"strings"
 )

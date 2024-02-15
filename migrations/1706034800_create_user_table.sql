@@ -1,16 +1,17 @@
 -- +goose Up
 CREATE TYPE UserType AS ENUM ('USER', 'ADMIN');
 
-CREATE TABLE IF NOT EXISTS "User" (
-    id         TEXT PRIMARY KEY DEFAULT gen_random_uuid(),
-    telegramID BIGINT UNIQUE,
-    firstName  TEXT NOT NULL,
-    lastName   TEXT NOT NULL,
-    username   TEXT DEFAULT 'none',
-    language   TEXT DEFAULT 'en',
-    userType   UserType NOT NULL DEFAULT 'USER',
-    createdAt  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updatedAt  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+-- Create "user" table
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    telegram_id BIGINT UNIQUE,
+    first_name VARCHAR NOT NULL,
+    last_name VARCHAR,
+    username VARCHAR,
+    language TEXT DEFAULT 'en',
+    user_type UserType NOT NULL DEFAULT 'USER',
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 

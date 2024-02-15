@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"bot/cmd/bot"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/cmd/bot"
 )
 
 type CallbackQuery struct {

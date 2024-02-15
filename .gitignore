@@ -3,3 +3,6 @@ bin
 bin/*
 tmp
 tmp/*
+.exe
+pkl/local
+pkl/prod

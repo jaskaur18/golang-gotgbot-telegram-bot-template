@@ -1,11 +1,11 @@
 package bot
 
 import (
-	"bot/internal/config"
 	"context"
-	"database/sql"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
+	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/config"
 	_ "github.com/lib/pq"
 	"github.com/pkg/errors"
 	"github.com/redis/go-redis/v9"
@@ -13,7 +13,7 @@ import (
 )
 
 func (s *Server) InitBot() error {
-	bot, err := gotgbot.NewBot(s.Config.TelegramBotConfig.BotToken, &gotgbot.BotOpts{})
+	bot, err := gotgbot.NewBot(s.Config.TelegramBotConfig.Token, &gotgbot.BotOpts{})
 
 	if err != nil {
 		return err
@@ -21,49 +21,40 @@ func (s *Server) InitBot() error {
 
 	s.Bot = bot
 
-	// Create updater and dispatcher.
-	updater := ext.NewUpdater(&ext.UpdaterOpts{
-		Dispatcher: ext.NewDispatcher(&ext.DispatcherOpts{
-			// If a handler returns an error, log it and continue going.
-			Error: func(b *gotgbot.Bot, ctx *ext.Context, err error) ext.DispatcherAction {
-				log.Error().Stack().Err(errors.Wrap(err, "wrapped error")).Msg("an error occurred while handling update")
-				return ext.DispatcherActionNoop
-			},
-			Panic: func(b *gotgbot.Bot, ctx *ext.Context, r interface{}) {
-				log.Error().Stack().Any("panic_reason", r).Msg("a panic occurred while handling update")
-			},
-			MaxRoutines: ext.DefaultMaxRoutines,
-		}),
+	dispatcher := ext.NewDispatcher(&ext.DispatcherOpts{
+		// If a handler returns an error, log it and continue going.
+		Error: func(b *gotgbot.Bot, ctx *ext.Context, err error) ext.DispatcherAction {
+			log.Error().Stack().Err(errors.Wrap(err, "wrapped error")).Msg("an error occurred while handling update")
+			return ext.DispatcherActionNoop
+		},
+		Panic: func(b *gotgbot.Bot, ctx *ext.Context, r interface{}) {
+			log.Error().Stack().Any("panic_reason", r).Msg("a panic occurred while handling update")
+		},
+		MaxRoutines: ext.DefaultMaxRoutines,
 	})
 
+	// Create updater and dispatcher.
+	updater := ext.NewUpdater(dispatcher, &ext.UpdaterOpts{})
+
 	s.Updater = updater
-	s.Dispatcher = updater.Dispatcher
+	s.Dispatcher = dispatcher
 
 	return nil
 }
 
-func InitDB(ctx context.Context, d *config.Database) (*sql.DB, error) {
-	log.Printf(d.ConnectionString())
-	db, err := sql.Open("postgres", d.ConnectionString())
+func InitDB(c *config.Bot) (*pgxpool.Pool, error) {
+	pgxPoolConfig, err := pgxpool.ParseConfig(c.ConnectionString())
+	if err != nil {
+		log.Error().Err(err).Msg("Error parsing pgxpool config")
+		return nil, err
+	}
+
+	conn, err := pgxpool.NewWithConfig(context.TODO(), pgxPoolConfig)
 	if err != nil {
 		return nil, err
 	}
 
-	if d.MaxOpenConns > 0 {
-		db.SetMaxOpenConns(d.MaxOpenConns)
-	}
-	if d.MaxIdleConns > 0 {
-		db.SetMaxIdleConns(d.MaxIdleConns)
-	}
-	if d.ConnMaxLifetime > 0 {
-		db.SetConnMaxLifetime(d.ConnMaxLifetime)
-	}
-
-	if err := db.PingContext(ctx); err != nil {
-		return nil, err
-	}
-
-	return db, nil
+	return conn, nil
 }
 
 func InitRedis(ctx context.Context, redisUri string) (*redis.Client, error) {

@@ -1,14 +1,13 @@
 package commands
 
 import (
-	"bot/cmd/bot"
-	"bot/internal/helper"
-	"bot/internal/models"
 	"context"
 	"fmt"
+	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/cmd/bot"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/db"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/helper"
 	"github.com/rs/zerolog/log"
-	"github.com/volatiletech/null/v8"
-	"github.com/volatiletech/sqlboiler/v4/boil"
 	"strconv"
 	"strings"
 
@@ -64,8 +63,8 @@ func HandleAdmin(s *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error {
 		return nil
 	}
 
-	targetUser, err := models.Users(models.UserWhere.Telegramid.EQ(null.Int64From(userIdInt))).One(context.Background(), s.DB)
-	if err != nil || targetUser == nil {
+	targetUser, err := s.Queries.GetUserByTelegramID(context.Background(), pgtype.Int8{Int64: userIdInt, Valid: true})
+	if err != nil {
 		log.Debug().Str("user_id", strconv.FormatInt(userIdInt, 10)).
 			Str("adminID", strconv.FormatInt(ctx.EffectiveUser.Id, 10)).Msg("User not found")
 
@@ -80,7 +79,7 @@ func HandleAdmin(s *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	newAdminStatus := newAdminStatusStr == "true"
-	currentAdminStatus := targetUser.Usertype == models.UsertypeADMIN
+	currentAdminStatus := targetUser.UserType == db.UsertypeADMIN
 
 	// Check if the new status is the same as the current status
 	if newAdminStatus == currentAdminStatus {
@@ -96,11 +95,15 @@ func HandleAdmin(s *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error {
 		return nil
 	}
 
-	targetUser.Usertype = models.UsertypeADMIN
+	targetUser.UserType = db.UsertypeADMIN
 
 	// Update the user's admin status
-	_, err = targetUser.Update(context.Background(), s.DB, boil.Whitelist(models.UserColumns.Usertype))
-	if err != nil {
+	params := db.UpdateUserTypeParams{
+		TelegramID: pgtype.Int8{Int64: userIdInt, Valid: true},
+		UserType:   db.UsertypeADMIN,
+	}
+
+	if err := s.Queries.UpdateUserType(context.Background(), params); err != nil {
 		log.Debug().Str("user_id", strconv.FormatInt(userIdInt, 10)).
 			Str("adminID", strconv.FormatInt(ctx.EffectiveUser.Id, 10)).
 			Err(err).Msg("Error updating user's admin status")

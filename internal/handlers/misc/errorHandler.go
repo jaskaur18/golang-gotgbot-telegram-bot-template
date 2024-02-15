@@ -1,10 +1,10 @@
 package misc
 
 import (
-	"bot/internal/helper"
 	"fmt"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/helper"
 	"github.com/rs/zerolog/log"
 	"runtime"
 )

@@ -1,0 +1,19 @@
+
+amends "../BotConfig.pkl"
+
+Bot {
+  SudoAdmins = List(1,2,3)
+}
+
+DB {
+  PSQLDB = "gary_telegram_bot"
+  PSQLHOST = "localhost"
+}
+
+Logger {
+  Level = "debug"
+}
+
+Misc {
+  RedisURI = "redis://localhost:6379/0"
+}

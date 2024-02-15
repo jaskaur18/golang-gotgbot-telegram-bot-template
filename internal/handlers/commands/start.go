@@ -1,34 +1,34 @@
 package commands
 
 import (
-	"bot/cmd/bot"
-	"bot/internal/handlers/misc"
-	"bot/internal/models"
-	"bot/internal/utils"
 	"context"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/gotgbot/keyboard"
+	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/cmd/bot"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/db"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/handlers/misc"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/utils"
 	"github.com/lus/fluent.go/fluent"
-	"github.com/volatiletech/null/v8"
-	"github.com/volatiletech/sqlboiler/v4/boil"
 )
 
 func CommandStart(s *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error {
-	c, err := models.Users(models.UserWhere.Telegramid.EQ(null.Int64From(ctx.EffectiveUser.Id))).Count(context.Background(), s.DB)
+	c, err := s.Queries.CheckUserExist(context.Background(), pgtype.Int8{Int64: ctx.EffectiveUser.Id, Valid: true})
 	if err != nil {
 		return misc.ErrorHandler(b, ctx, err)
 	}
 
-	if c == 0 {
-		u := &models.User{
-			Telegramid: null.Int64From(ctx.EffectiveUser.Id),
-			Firstname:  ctx.EffectiveUser.FirstName,
-			Lastname:   ctx.EffectiveUser.LastName,
-			Username:   null.StringFrom(ctx.EffectiveUser.Username),
+	if !c {
+		u := db.CreateUserParams{
+			TelegramID: pgtype.Int8{Int64: ctx.EffectiveUser.Id, Valid: true},
+			FirstName:  ctx.EffectiveUser.FirstName,
+			LastName:   pgtype.Text{String: ctx.EffectiveUser.LastName, Valid: true},
+			Username:   pgtype.Text{String: ctx.EffectiveUser.Username, Valid: true},
+			UserType:   db.UsertypeUSER,
 		}
 
-		err := u.Insert(context.Background(), s.DB, boil.Infer())
+		_, err := s.Queries.CreateUser(context.Background(), u)
 		if err != nil {
 			return misc.ErrorHandler(b, ctx, err)
 		}

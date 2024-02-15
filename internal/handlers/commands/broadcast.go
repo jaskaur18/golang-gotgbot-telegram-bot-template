@@ -1,20 +1,19 @@
 package commands
 
 import (
-	"bot/cmd/bot"
-	"bot/internal/handlers/misc"
-	"bot/internal/models"
 	"context"
 	"fmt"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/cmd/bot"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/handlers/misc"
 	"github.com/rs/zerolog/log"
 	"strings"
 	"time"
 )
 
 func CommandBroadcast(s *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error {
-	allUsers, err := models.Users().All(context.Background(), s.DB)
+	allUsers, err := s.Queries.ListUsers(context.Background())
 	if err != nil {
 		return misc.ErrorHandler(b, ctx, err)
 	}
@@ -29,9 +28,9 @@ func CommandBroadcast(s *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error {
 
 	totalSend := 0
 	for _, user := range allUsers {
-		_, err = b.SendMessage(user.Telegramid.Int64, msg, nil)
+		_, err = b.SendMessage(user.TelegramID.Int64, msg, nil)
 		if err != nil {
-			log.Printf("Error sending message to %d: %s", user.Telegramid.Int64, err)
+			log.Printf("Error sending message to %d: %s", user.TelegramID.Int64, err)
 			continue
 		}
 		totalSend++

@@ -1,10 +1,10 @@
 package commands
 
 import (
-	"bot/cmd/bot"
-	"bot/internal/utils"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/cmd/bot"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/utils"
 	"github.com/rs/zerolog/log"
 )
 

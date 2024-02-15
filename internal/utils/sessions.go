@@ -1,11 +1,11 @@
 package utils
 
 import (
-	"bot/internal/helper"
 	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/helper"
 	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog/log"
 	"strconv"

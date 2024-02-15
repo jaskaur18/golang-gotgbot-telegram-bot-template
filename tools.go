@@ -13,7 +13,6 @@ package tools
 import (
 	_ "github.com/cosmtrek/air"
 	_ "github.com/pressly/goose/v3"
-	_ "github.com/volatiletech/sqlboiler/v4"
-	_ "github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-psql"
+	_ "github.com/sqlc-dev/sqlc/cmd/sqlc"
 	_ "golang.org/x/vuln/cmd/govulncheck"
 )
