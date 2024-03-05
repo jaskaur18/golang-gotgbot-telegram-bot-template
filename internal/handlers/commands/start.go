@@ -2,6 +2,7 @@ package commands
 
 import (
 	"context"
+
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/gotgbot/keyboard"
@@ -9,7 +10,6 @@ import (
 	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/cmd/bot"
 	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/db"
 	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/handlers/misc"
-	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/utils"
 	"github.com/lus/fluent.go/fluent"
 )
 
@@ -34,7 +34,7 @@ func CommandStart(s *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error {
 		}
 	}
 
-	msg := utils.GetMessage(s.Redis, ctx, "welcome", fluent.WithVariable("name", ctx.EffectiveUser.FirstName))
+	msg := s.Locale.GetMessage(s.Redis, ctx, "welcome", fluent.WithVariable("name", ctx.EffectiveUser.FirstName))
 
 	_, err = ctx.EffectiveMessage.Reply(b, msg, &gotgbot.SendMessageOpts{
 		ParseMode: "html",

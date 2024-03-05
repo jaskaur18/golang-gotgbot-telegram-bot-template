@@ -3,4 +3,6 @@ package pklgen
 
 type MISC struct {
 	RedisURI string `pkl:"RedisURI"`
+
+	LocalesDir string `pkl:"LocalesDir"`
 }

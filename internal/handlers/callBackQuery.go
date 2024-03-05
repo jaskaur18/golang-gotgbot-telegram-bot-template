@@ -13,4 +13,8 @@ type CallbackQuery struct {
 	Handler  func(*bot.Server, *gotgbot.Bot, *ext.Context) error
 }
 
-var CallbackQueries = []CallbackQuery{}
+func GetCallbackQueryList() []CallbackQuery {
+	CallbackQueries := make([]CallbackQuery, 0)
+
+	return CallbackQueries
+}

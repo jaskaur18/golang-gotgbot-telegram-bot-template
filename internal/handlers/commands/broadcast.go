@@ -3,13 +3,14 @@ package commands
 import (
 	"context"
 	"fmt"
+	"strings"
+	"time"
+
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/cmd/bot"
 	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/handlers/misc"
 	"github.com/rs/zerolog/log"
-	"strings"
-	"time"
 )
 
 func CommandBroadcast(s *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error {
@@ -34,7 +35,8 @@ func CommandBroadcast(s *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error {
 			continue
 		}
 		totalSend++
-		time.Sleep(100 * time.Millisecond)
+		sleepValue := 100
+		time.Sleep(time.Duration(sleepValue) * time.Millisecond)
 	}
 
 	log.Info().Int("totalSend", totalSend).Msg("Broadcast to users")

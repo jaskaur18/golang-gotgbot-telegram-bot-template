@@ -72,6 +72,14 @@ tasks:
     cmds:
       - golangci-lint run
 
+  nil-away:
+    nilaway -exclude-pkgs="github.com/labstack/echo,github.com/a-h/templ,github.com/cosmtrek/air,github.com/nedpals/supabase-go,github.com/apple/pkl-go" ./...
+
+  config-gen:
+    desc: Generate config file.
+    cmds:
+      - pkl-gen-go pkl/botConfig.pkl
+
   fmt:
     desc: Reformat code
     cmds:
@@ -129,7 +137,6 @@ tasks:
   sqlc-gen:
     desc: Run SQLC to generate models.
     cmds:
-      - echo PSQL_DBNAME="${PSQL_DBNAME}" PSQL_HOST="${PSQL_HOST}" PSQL_USER="${PSQL_USER}" PSQL_PASS="${PSQL_PASS}" sqlc generate
       - PSQL_DBNAME="${PSQL_DBNAME}" PSQL_HOST="${PSQL_HOST}" PSQL_USER="${PSQL_USER}" PSQL_PASS="${PSQL_PASS}" sqlc generate
 
   check:
@@ -138,6 +145,7 @@ tasks:
       - task: fmt
       - task: tidy
       - task: lint
+      - task: nil-away
       - task: vuln
       - task: sql-check-files
       - task: sql-check-structure

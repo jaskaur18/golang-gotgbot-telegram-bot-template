@@ -14,29 +14,33 @@ type Commands struct {
 	Handler  func(*bot.Server, *gotgbot.Bot, *ext.Context) error
 }
 
-var CommandsList = []Commands{
-	{
-		Name:     "start",
-		LevelReq: AccessLevelUser,
-		Handler:  commands.CommandStart,
-		ChatType: ChatTypePrivate,
-	},
-	{
-		Name:     "lang",
-		LevelReq: AccessLevelUser,
-		Handler:  commands.HandleLanguage,
-		ChatType: ChatTypePrivate,
-	},
-	{
-		Name:     "admin",
-		LevelReq: AccessLevelSudoAdmin,
-		Handler:  commands.HandleAdmin,
-		ChatType: ChatTypePrivate,
-	},
-	{
-		Name:     "broadcast",
-		LevelReq: AccessLevelAdmin,
-		Handler:  commands.CommandBroadcast,
-		ChatType: ChatTypePrivate,
-	},
+func GetCommandList() []Commands {
+	CommandsList := []Commands{
+		{
+			Name:     "start",
+			LevelReq: AccessLevelUser,
+			Handler:  commands.CommandStart,
+			ChatType: ChatTypePrivate,
+		},
+		{
+			Name:     "lang",
+			LevelReq: AccessLevelUser,
+			Handler:  commands.HandleLanguage,
+			ChatType: ChatTypePrivate,
+		},
+		{
+			Name:     "admin",
+			LevelReq: AccessLevelSudoAdmin,
+			Handler:  commands.HandleAdmin,
+			ChatType: ChatTypePrivate,
+		},
+		{
+			Name:     "broadcast",
+			LevelReq: AccessLevelAdmin,
+			Handler:  commands.CommandBroadcast,
+			ChatType: ChatTypePrivate,
+		},
+	}
+
+	return CommandsList
 }

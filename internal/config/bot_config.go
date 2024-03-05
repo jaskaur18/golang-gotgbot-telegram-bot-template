@@ -2,6 +2,7 @@ package config
 
 import (
 	"context"
+
 	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/pkl/pklgen"
 	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/pkl/pklgen/environment"
 	"github.com/rs/zerolog"
@@ -16,7 +17,7 @@ type Bot struct {
 	ENV               environment.Environment
 }
 
-func DefaultServiceConfigFromEnv() Bot {
+func DefaultServiceConfig() Bot {
 	cfg, err := pklgen.LoadFromPath(context.Background(), "pkl/local/BotConfig.pkl")
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to load config")

@@ -8,14 +8,12 @@ require (
 	github.com/cosmtrek/air v1.49.0
 	github.com/gotgbot/keyboard v1.0.0
 	github.com/jackc/pgx/v5 v5.5.3
-	github.com/joho/godotenv v1.5.1
 	github.com/lib/pq v1.10.9
 	github.com/lus/fluent.go v0.0.0-20220910145526-914fd9005b76
 	github.com/pkg/errors v0.9.1
 	github.com/pressly/goose/v3 v3.18.0
 	github.com/redis/go-redis/v9 v9.4.0
 	github.com/rs/zerolog v1.32.0
-	github.com/sethvargo/go-envconfig v1.0.0
 	github.com/sqlc-dev/sqlc v1.25.0
 	golang.org/x/text v0.14.0
 	golang.org/x/vuln v1.0.4

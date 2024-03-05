@@ -2,28 +2,32 @@ package cmd
 
 import (
 	"context"
-	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/cmd/bot"
-	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/config"
-	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/db"
-	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/handlers"
-	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/helper"
-	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/utils"
-	"github.com/redis/go-redis/v9"
-	"github.com/rs/zerolog/log"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/cmd/bot"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/config"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/constant"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/db"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/handlers"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/utils"
+	"github.com/redis/go-redis/v9"
+	"github.com/rs/zerolog/log"
+)
+
+const (
+	TimeoutSeconds = 10
 )
 
 func App() {
-
 	// Load config
-	c := config.DefaultServiceConfigFromEnv()
+	c := config.DefaultServiceConfig()
 
 	// Load constants
-	helper.InitConstants(&c)
+	constant.InitConstants(&c)
 
 	// Setup logger
 	utils.SetupLogger(config.LogLevelFromString(c.Logger.Level.String()), c.Logger.PrettyPrintConsole)
@@ -38,7 +42,7 @@ func App() {
 	q := db.New(dbInstance)
 
 	var r *redis.Client
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), TimeoutSeconds*time.Second)
 	log.Info().Msg("Initializing redis")
 	if r, err = bot.InitRedis(ctx, c.Misc.RedisURI); err != nil {
 		cancel()
@@ -46,14 +50,16 @@ func App() {
 	}
 	cancel()
 
-	s := bot.NewServer(c, dbInstance, q, r)
+	locale := utils.NewLocaleLoader(c.Misc.LocalesDir)
+
+	s := bot.NewServer(c, dbInstance, q, r, locale)
 
 	log.Info().Msg("Initializing bot")
 	if err := s.InitBot(); err != nil {
 		log.Fatal().Err(err).Msg("Failed to initialize bot")
 	}
 
-	//Attach Handlers to Dispatcher
+	// Attach Handlers to Dispatcher
 	handlers.LoadHandlers(s)
 
 	go func() {
@@ -68,6 +74,6 @@ func App() {
 	signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
 	<-quit
 
-	//Shutdown Bot
+	// Shutdown Bot
 	s.Shutdown()
 }

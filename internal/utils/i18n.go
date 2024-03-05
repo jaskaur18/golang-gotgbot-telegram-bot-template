@@ -1,27 +1,32 @@
 package utils
 
 import (
-	"github.com/PaulSonOfLars/gotgbot/v2/ext"
-	"github.com/redis/go-redis/v9"
-	"github.com/rs/zerolog/log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/PaulSonOfLars/gotgbot/v2/ext"
+	"github.com/redis/go-redis/v9"
+	"github.com/rs/zerolog/log"
 
 	"github.com/lus/fluent.go/fluent"
 	"golang.org/x/text/language"
 )
 
-// Global map to store bundles for each locale
-var bundles = make(map[string]*fluent.Bundle)
-
-func init() {
-	// Load locales from the locales directory
-	locales := getLocales("locales")
-	loadLocales("locales", locales)
+type LocaleLoader struct {
+	bundles map[string]*fluent.Bundle
 }
 
-func getLocales(root string) []string {
+func NewLocaleLoader(localesDir string) *LocaleLoader {
+	loader := &LocaleLoader{
+		bundles: make(map[string]*fluent.Bundle),
+	}
+	locales := loader.getLocales(localesDir)
+	loader.loadLocales(localesDir, locales)
+	return loader
+}
+
+func (l *LocaleLoader) getLocales(root string) []string {
 	files, err := os.ReadDir(root)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Error reading locale directory")
@@ -33,11 +38,10 @@ func getLocales(root string) []string {
 			locales = append(locales, f.Name())
 		}
 	}
-
 	return locales
 }
 
-func loadLocales(root string, locales []string) {
+func (l *LocaleLoader) loadLocales(root string, locales []string) {
 	for _, locale := range locales {
 		bundle := fluent.NewBundle(language.Make(locale))
 		files, err := os.ReadDir(filepath.Join(root, locale))
@@ -54,53 +58,54 @@ func loadLocales(root string, locales []string) {
 				}
 				resource, errs := fluent.NewResource(string(content))
 				if errs != nil {
-					log.Error().Any("errors", errs).Msg("Failed to parse .ftl file")
+					for _, err := range errs {
+						log.Error().Err(err).Msg("Failed to parse .ftl file")
+					}
 					continue
 				}
 				bundle.AddResourceOverriding(resource)
 			}
 		}
 
-		bundles[locale] = bundle
+		l.bundles[locale] = bundle
 	}
 }
 
-func GetUserLocale(s *redis.Client, tgId int64) (locale string) {
-	locale = "en"
+func (l *LocaleLoader) GetUserLocale(s *redis.Client, tgID int64) string {
+	locale := "en"
 
-	session, err := GetSession(s, tgId)
+	session, err := GetSession(s, tgID) // Assuming GetSession is implemented elsewhere
 	if err != nil {
 		log.Debug().
-			Int64("tgId", tgId).
+			Int64("tgId", tgID).
 			Err(err).Msg("Error getting session")
 		return locale
 	}
 
 	if session.Language != "" {
-		return session.Language
+		locale = session.Language
 	}
-
 	return locale
 }
 
-func GetMessage(r *redis.Client, c *ext.Context, key string, contexts ...*fluent.FormatContext) (message string) {
-	tgId := c.EffectiveUser.Id
-	locale := GetUserLocale(r, tgId)
+func (l *LocaleLoader) GetMessage(
+	r *redis.Client, c *ext.Context, key string, contexts ...*fluent.FormatContext) string {
+	tgID := c.EffectiveUser.Id
+	locale := l.GetUserLocale(r, tgID)
 
-	bundle, exists := bundles[locale]
+	bundle, exists := l.bundles[locale]
 	if !exists {
 		log.Warn().
-			Int64("tgId", tgId).
+			Int64("tgId", tgID).
 			Str("locale", locale).
 			Msg("No translations found for locale")
-
 		return key
 	}
 
 	message, _, err := bundle.FormatMessage(key, contexts...)
 	if err != nil {
 		log.Info().
-			Int64("tgId", tgId).
+			Int64("tgId", tgID).
 			Str("locale", locale).
 			Err(err).Msg("Error formatting message")
 		return key
@@ -109,8 +114,7 @@ func GetMessage(r *redis.Client, c *ext.Context, key string, contexts ...*fluent
 	return message
 }
 
-// CheckLocale Check if Locale Exists
-func CheckLocale(locale string) bool {
-	_, exists := bundles[locale]
+func (l *LocaleLoader) CheckLocale(locale string) bool {
+	_, exists := l.bundles[locale]
 	return exists
 }

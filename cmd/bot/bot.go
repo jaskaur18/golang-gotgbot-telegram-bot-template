@@ -2,6 +2,7 @@ package bot
 
 import (
 	"errors"
+
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -21,14 +22,18 @@ type Server struct {
 	DB         *pgxpool.Pool
 	Queries    *db.Queries
 	Redis      *redis.Client
+	Locale     *utils.LocaleLoader
 }
 
-func NewServer(config config.Bot, db *pgxpool.Pool, queries *db.Queries, redisClient *redis.Client) *Server {
+func NewServer(
+	config config.Bot, db *pgxpool.Pool, queries *db.Queries,
+	redisClient *redis.Client, locale *utils.LocaleLoader) *Server {
 	b := &Server{
 		Config:  config,
 		DB:      db,
 		Queries: queries,
 		Redis:   redisClient,
+		Locale:  locale,
 	}
 
 	return b

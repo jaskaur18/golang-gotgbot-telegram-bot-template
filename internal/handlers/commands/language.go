@@ -11,22 +11,23 @@ import (
 func HandleLanguage(s *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error {
 	args := ctx.Args()
 
-	if len(args) < 2 {
-		_, err := ctx.Message.Reply(b, utils.GetMessage(s.Redis, ctx, "invalidLangArgs"), &gotgbot.SendMessageOpts{})
+	langArgumentNo := 2
+	if len(args) < langArgumentNo {
+		_, err := ctx.Message.Reply(b, s.Locale.GetMessage(s.Redis, ctx, "invalidLangArgs"), &gotgbot.SendMessageOpts{})
 
 		return err
 	}
 
 	lang := args[1]
 
-	if !utils.CheckLocale(lang) {
-		_, err := ctx.Message.Reply(b, utils.GetMessage(s.Redis, ctx, "invalidLang"), &gotgbot.SendMessageOpts{})
+	if !s.Locale.CheckLocale(lang) {
+		_, err := ctx.Message.Reply(b, s.Locale.GetMessage(s.Redis, ctx, "invalidLang"), &gotgbot.SendMessageOpts{})
 		return err
 	}
 
 	session, err := utils.GetSession(s.Redis, ctx.EffectiveUser.Id)
 	if err != nil {
-		_, err := ctx.Message.Reply(b, utils.GetMessage(s.Redis, ctx, "getState"), &gotgbot.SendMessageOpts{})
+		_, err := ctx.Message.Reply(b, s.Locale.GetMessage(s.Redis, ctx, "getState"), &gotgbot.SendMessageOpts{})
 		return err
 	}
 
@@ -35,7 +36,7 @@ func HandleLanguage(s *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error {
 
 	if err != nil {
 		log.Error().Err(err).Stack().Msg("Failed to save session")
-		_, err := ctx.Message.Reply(b, utils.GetMessage(s.Redis, ctx, "saveState"), &gotgbot.SendMessageOpts{})
+		_, err := ctx.Message.Reply(b, s.Locale.GetMessage(s.Redis, ctx, "saveState"), &gotgbot.SendMessageOpts{})
 		return err
 	}
 
@@ -43,7 +44,7 @@ func HandleLanguage(s *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error {
 		Int64("user", ctx.EffectiveUser.Id).
 		Str("lang", lang).Msg("Language changed")
 
-	_, err = ctx.Message.Reply(b, utils.GetMessage(s.Redis, ctx, "langSuccess"), &gotgbot.SendMessageOpts{})
+	_, err = ctx.Message.Reply(b, s.Locale.GetMessage(s.Redis, ctx, "langSuccess"), &gotgbot.SendMessageOpts{})
 
 	return err
 }

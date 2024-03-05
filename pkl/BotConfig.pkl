@@ -44,6 +44,7 @@ class Database {
 
 class MISC {
   RedisURI: String
+  LocalesDir: String = "locales"
 }
 
 typealias levels = "debug"|"info"|"warn"|"error"|"fatal"|"panic"|"trace"|"disabled"|"nolevel"

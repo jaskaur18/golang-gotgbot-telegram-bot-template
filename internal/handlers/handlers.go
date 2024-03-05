@@ -1,7 +1,10 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
+	"strings"
+
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
@@ -10,7 +13,6 @@ import (
 	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/cmd/bot"
 	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/middlewares"
 	"github.com/rs/zerolog/log"
-	"strings"
 )
 
 type (
@@ -53,10 +55,10 @@ func handleCallbackQuery(s *bot.Server) func(b *gotgbot.Bot, c *ext.Context) err
 	return func(b *gotgbot.Bot, c *ext.Context) error {
 		if c.CallbackQuery == nil {
 			log.Error().Msg("Callback query is nil")
-			return fmt.Errorf("callback query is nil")
+			return errors.New("callback query is nil")
 		}
 		log.Debug().Str("CallbackData", c.CallbackQuery.Data).Msg("Processing callback query")
-		for _, callback := range CallbackQueries {
+		for _, callback := range GetCallbackQueryList() {
 			if strings.HasPrefix(c.CallbackQuery.Data, callback.Prefix) {
 				if !checkAccessLevel(s, callback.LevelReq, c) {
 					return handleNotAllowed(b, c, callback.LevelReq.String(), true)
@@ -90,7 +92,7 @@ func HandleTextMessageFilter(s *bot.Server) func(b *gotgbot.Bot, c *ext.Context)
 
 		log.Debug().Str("Text", c.EffectiveMessage.Text).Msg("Processing text message")
 
-		for _, filter := range TextFilters {
+		for _, filter := range GetTextFilters() {
 			if filter.Text == c.EffectiveMessage.Text {
 				if !checkAccessLevel(s, filter.LevelReq, c) {
 					log.Debug().Str("Text", c.EffectiveMessage.Text).Str("LevelReq", filter.LevelReq.String()).Msg("Access denied")
@@ -98,7 +100,10 @@ func HandleTextMessageFilter(s *bot.Server) func(b *gotgbot.Bot, c *ext.Context)
 				}
 
 				if !checkChatType(filter.ChatType, c) {
-					log.Debug().Str("Text", c.EffectiveMessage.Text).Str("ChatType", filter.ChatType.String()).Msg("Chat type not allowed")
+					log.Debug().
+						Str("Text", c.EffectiveMessage.Text).
+						Str("ChatType", filter.ChatType.String()).
+						Msg("Chat type not allowed")
 					return nil
 				}
 
@@ -117,8 +122,8 @@ func handleCommand(s *bot.Server, b *gotgbot.Bot, c *ext.Context) error {
 
 	log.Debug().Str("Command", text).Msg("Processing command")
 
-	for _, cmd := range CommandsList {
-		if strings.HasPrefix(text, fmt.Sprintf("/%s", cmd.Name)) {
+	for _, cmd := range GetCommandList() {
+		if strings.HasPrefix(text, "/"+cmd.Name) {
 			if !checkAccessLevel(s, cmd.LevelReq, c) {
 				log.Debug().Str("Command", text).Str("LevelReq", cmd.LevelReq.String()).Msg("Access denied")
 				return handleNotAllowed(b, c, cmd.LevelReq.String())
@@ -133,7 +138,8 @@ func handleCommand(s *bot.Server, b *gotgbot.Bot, c *ext.Context) error {
 	return nil
 }
 
-func handleNotAllowed(b *gotgbot.Bot, c *ext.Context, role string, cb ...bool) (err error) {
+func handleNotAllowed(b *gotgbot.Bot, c *ext.Context, role string, cb ...bool) error {
+	var err error
 	errMsg := fmt.Sprintf("Access denied: You need %s privileges to use this command", role)
 	if len(cb) > 0 && cb[0] {
 		_, err = c.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{

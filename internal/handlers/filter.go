@@ -13,6 +13,9 @@ type TextFilter struct {
 	Handler  func(bot *bot.Server, b *gotgbot.Bot, ctx *ext.Context) error
 }
 
-var TextFilters = []TextFilter{
-	{},
+func GetTextFilters() []TextFilter {
+	TextFilters := []TextFilter{
+		{},
+	}
+	return TextFilters
 }

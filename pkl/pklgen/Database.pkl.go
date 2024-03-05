@@ -20,5 +20,7 @@ type Database struct {
 
 	MaxIdleConns int32 `pkl:"MaxIdleConns"`
 
+	MinIdleConns int32 `pkl:"MinIdleConns"`
+
 	ConnectionMaxLifetime *pkl.Duration `pkl:"ConnectionMaxLifetime"`
 }

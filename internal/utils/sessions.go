@@ -5,11 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/helper"
-	"github.com/redis/go-redis/v9"
-	"github.com/rs/zerolog/log"
 	"strconv"
 	"time"
+
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/constant"
+	"github.com/redis/go-redis/v9"
+	"github.com/rs/zerolog/log"
 )
 
 type Session struct {
@@ -18,22 +19,21 @@ type Session struct {
 	Language   string `json:"language"`
 }
 
-func GetSession(r *redis.Client, telegramId int64) (*Session, error) {
+func GetSession(r *redis.Client, telegramID int64) (*Session, error) {
 	var session Session
-	ctx, cancel := context.WithTimeout(context.Background(), helper.RedisTimeOut)
+	ctx, cancel := context.WithTimeout(context.Background(), constant.GetRedisTimeOut())
 	defer cancel()
 
-	key := fmt.Sprintf("%d", telegramId)
+	key := strconv.FormatInt(telegramID, 10)
 
 	data, err := r.Get(ctx, key).Result()
 	if err != nil {
-		log.Printf("Error getting session: %v", err)
 		// Check if the error is due to key not found in Redis.
 		if errors.Is(err, redis.Nil) {
 			// Create an empty session and save it to Redis.
 			emptySession := &Session{
 				r:          r,
-				TelegramID: telegramId,
+				TelegramID: telegramID,
 				Language:   "en"}
 			err := emptySession.Save() // Save empty session to Redis
 			if err != nil {
@@ -59,19 +59,19 @@ func GetSession(r *redis.Client, telegramId int64) (*Session, error) {
 		// Return a fresh session with default language
 		return &Session{
 			r:          r,
-			TelegramID: telegramId,
+			TelegramID: telegramID,
 			Language:   "en",
 		}, nil
 	}
 
 	session.r = r
-	session.TelegramID = telegramId
+	session.TelegramID = telegramID
 
 	return &session, nil
 }
 
 func (s *Session) Save() error {
-	ctx, cancel := context.WithTimeout(context.Background(), helper.RedisTimeOut)
+	ctx, cancel := context.WithTimeout(context.Background(), constant.GetRedisTimeOut())
 	defer cancel()
 
 	data, err := json.Marshal(s)
@@ -79,7 +79,8 @@ func (s *Session) Save() error {
 		return err
 	}
 
-	err = s.r.Set(ctx, strconv.FormatInt(s.TelegramID, 10), data, 24*time.Hour).Err()
+	var Time24Hours = 24
+	err = s.r.Set(ctx, strconv.FormatInt(s.TelegramID, 10), data, time.Duration(Time24Hours)*time.Hour).Err()
 	if err != nil {
 		msg := fmt.Sprintf("error saving session to redis telegramId: %d", s.TelegramID)
 		return errors.New(msg)
@@ -89,7 +90,7 @@ func (s *Session) Save() error {
 }
 
 func (s *Session) Clear() error {
-	ctx, cancel := context.WithTimeout(context.Background(), helper.RedisTimeOut)
+	ctx, cancel := context.WithTimeout(context.Background(), constant.GetRedisTimeOut())
 	defer cancel()
 
 	err := s.r.Del(ctx, strconv.FormatInt(s.TelegramID, 10)).Err()

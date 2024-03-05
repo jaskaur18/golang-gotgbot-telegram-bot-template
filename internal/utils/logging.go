@@ -1,14 +1,15 @@
 package utils
 
 import (
+	"time"
+
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/rs/zerolog/pkgerrors"
-	"time"
 )
 
 func SetupLogger(level zerolog.Level, prettyPrint bool) {
-	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
+	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack //nolint:reassign
 	zerolog.TimeFieldFormat = time.RFC3339Nano
 	zerolog.SetGlobalLevel(level)
 

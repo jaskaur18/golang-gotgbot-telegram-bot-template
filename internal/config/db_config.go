@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-// ConnectionString generates a PostgreSQL connection string for pgxpool
+// ConnectionString generates a PostgreSQL connection string for pgxpool.
 func (c *Bot) ConnectionString() string {
 	var b strings.Builder
 	b.WriteString(fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s", c.Database.PSQLHOST, c.Database.PSQLPORT,
@@ -27,7 +27,7 @@ func (c *Bot) ConnectionString() string {
 		b.WriteString(fmt.Sprintf(" pool_min_conns=%d", c.Database.MaxIdleConns))
 	}
 	if c.Database.ConnectionMaxLifetime.GoDuration() > 0 {
-		b.WriteString(fmt.Sprintf(" pool_max_conn_lifetime=%s", c.Database.ConnectionMaxLifetime))
+		b.WriteString(fmt.Sprintf(" pool_max_conn_lifetime=%s", c.Database.ConnectionMaxLifetime.GoDuration()))
 	}
 
 	return b.String()
