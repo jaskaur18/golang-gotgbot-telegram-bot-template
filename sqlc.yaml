@@ -4,7 +4,7 @@ sql:
     queries: "queries/*.sql"
     schema: "migrations/*.sql"
     database:
-      uri: "postgresql://${PSQL_USER}:${PSQL_PASS}@${PSQL_HOST}:5432/${PSQL_DBNAME}?sslmode=disable"
+      uri: "postgresql://${PSQL_USER}:${PSQL_PASS}@${PSQL_HOST}:${PSQL_PORT}/${PSQL_DBNAME}?sslmode=${PSQL_SSLMODE}"
     gen:
       go:
         package: "db"
