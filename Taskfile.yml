@@ -16,72 +16,41 @@ tasks:
   install:
     desc: Initialize the project.
     cmds:
-      - task: install:bun
       - task: install:modules
       - task: install:tools
       - task: install:golint
 
   gen:
-    desc: Generate Templ and TailwindCSS files.
+    desc: Generate Config
     cmds:
-      - bun run fmt
-      - bun run build
-      - task: generate-templ
       - task: config-gen
 
   config-gen:
     desc: Generate config file.
     cmds:
-      - pkl-gen-go pkl/appConfig.pkl
-
-  generate-templ:
-    desc: Generate Templ files.
-    cmds:
-      - templ generate
+      - pkl-gen-go pkl/BotConfig.pkl
 
   dev:
     desc: Run the dev server.
     cmds:
-      - task --parallel dev:templ dev:air dev:assets
-
-  dev:assets:
-    desc: Run TailwindCSS And Esbuild build in watch mode.
-    cmds:
-      - bun run dev
-
-  dev:air:
-    desc: Run the dev server with air.
-    cmds:
-      - air -c .air.toml
-
-  dev:templ:
-    desc: Run the dev server with templ.
-    cmds:
-      - templ generate --watch --proxy="http://localhost:8080" --open-browser=false ./views
-
-  dev:sync_assets: air -c .air_proxy.toml
+      - air
 
   build:
-    desc: Build production Go binary and assets.
+    desc: Build production Go binary
     cmds:
-      - bun run build
       - go build -a -gcflags=all="-l -B" -ldflags="-w -s" -o bin/app ./main.go
       - chmod +x bin/app
 
-  dev-caddy:
-    desc: Run Caddy server For WildCard SubDomain For Local Development.
+  build-linux:
+    desc: Build production Go binary for Linux
     cmds:
-      - caddy run --config ./scripts/Caddyfile.dev
+      - GOOS=linux GOARCH=amd64 go build -a -gcflags=all="-l -B" -ldflags="-w -s" -o bin/app-linux ./main.go
+      - chmod +x bin/app-linux
 
   run:
     desc: Run the Go binary.
     cmds:
       - ./bin/app
-
-  install:bun:
-    desc: Install dependencies.
-    cmds:
-      - bun install
 
   install:golint:
     desc: Install golint.

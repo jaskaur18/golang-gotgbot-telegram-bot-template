@@ -4,36 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="Automatically Update update_at table field on any changes onto that row">
-      <change beforePath="$PROJECT_DIR$/.golangci.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.golangci.yaml" afterDir="false" />
+    <list default="true" id="9b11d959-6982-49c5-8db2-88831a1b1481" name="Changes" comment="Modified Linter Configuration&#10;Adjusted Code According To New Linter Config">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskfile.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Taskfile.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/bot/bot.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/bot/bot.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/bot/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/bot/init.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/config/bot_config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/bot_config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/config/db_config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/db_config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/env/env.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handlers/callBackQuery.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/callBackQuery.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handlers/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/command.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handlers/commands/admin.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/commands/admin.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handlers/commands/broadcast.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/commands/broadcast.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handlers/commands/language.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/commands/language.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handlers/commands/start.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/commands/start.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handlers/filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/filter.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handlers/handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/handlers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handlers/misc/errorHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handlers/misc/errorHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/helper/constants.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/constant/constants.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/middlewares/isAdmin.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/middlewares/isAdmin.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/utils/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/utils/i18n.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/i18n.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/utils/launch.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/launch.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/utils/logging.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/logging.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/utils/sessions.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/sessions.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkl/BotConfig.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/pkl/BotConfig.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkl/local/botConfig.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/pkl/local/botConfig.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkl/pklgen/Database.pkl.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkl/pklgen/Database.pkl.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkl/pklgen/Misc.pkl.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkl/pklgen/Misc.pkl.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +53,7 @@
     "git-widget-placeholder": "v2",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/Users/honey/Projects/Golang/Telegram-Related/Telegram_Bots/Boilerplates/Golang-TgBot-template/internal/constant",
+    "last_opened_file_path": "/Users/honey/Projects/golang/telegram-related/telegram-bot/boilerplate/Golang-TgBot-template",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -155,7 +128,8 @@
     <MESSAGE value="deps update" />
     <MESSAGE value="Major Changes!!!&#10;SqlBoiler -&gt; SQlc&#10;Config (ENV) -&gt; Plk Config&#10;&#10;And Other Changes" />
     <MESSAGE value="Automatically Update update_at table field on any changes onto that row" />
-    <option name="LAST_COMMIT_MESSAGE" value="Automatically Update update_at table field on any changes onto that row" />
+    <MESSAGE value="Modified Linter Configuration&#10;Adjusted Code According To New Linter Config" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modified Linter Configuration&#10;Adjusted Code According To New Linter Config" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

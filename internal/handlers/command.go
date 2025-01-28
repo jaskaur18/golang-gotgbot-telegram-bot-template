@@ -5,6 +5,7 @@ import (
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/cmd/bot"
 	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/handlers/commands"
+	"github.com/jaskaur18/golang-gotgbot-telegram-bot-template/internal/handlers/misc"
 )
 
 type Commands struct {
@@ -25,7 +26,7 @@ func GetCommandList() []Commands {
 		{
 			Name:     "lang",
 			LevelReq: AccessLevelUser,
-			Handler:  commands.HandleLanguage,
+			Handler:  misc.HandleLanguageInline,
 			ChatType: ChatTypePrivate,
 		},
 		{

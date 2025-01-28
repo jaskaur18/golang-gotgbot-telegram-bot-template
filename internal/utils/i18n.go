@@ -71,6 +71,14 @@ func (l *LocaleLoader) loadLocales(root string, locales []string) {
 	}
 }
 
+func (l *LocaleLoader) GetAvailableLocales() []string {
+	var locales []string
+	for locale := range l.bundles {
+		locales = append(locales, locale)
+	}
+	return locales
+}
+
 func (l *LocaleLoader) GetUserLocale(s *redis.Client, tgID int64) string {
 	locale := "en"
 
