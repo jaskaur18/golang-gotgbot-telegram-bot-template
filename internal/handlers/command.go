@@ -9,37 +9,42 @@ import (
 )
 
 type Commands struct {
-	Name     string
-	LevelReq AccessLevel
-	ChatType ChatType
-	Handler  func(*bot.Server, *gotgbot.Bot, *ext.Context) error
+	Name        string
+	LevelReq    AccessLevel
+	ChatType    ChatType
+	Description string
+	Handler     func(*bot.Server, *gotgbot.Bot, *ext.Context) error
 }
 
 func GetCommandList() []Commands {
 	CommandsList := []Commands{
 		{
-			Name:     "start",
-			LevelReq: AccessLevelUser,
-			Handler:  commands.CommandStart,
-			ChatType: ChatTypePrivate,
+			Name:        "start",
+			LevelReq:    AccessLevelUser,
+			Handler:     commands.CommandStart,
+			ChatType:    ChatTypePrivate,
+			Description: "Start the bot",
 		},
 		{
-			Name:     "lang",
-			LevelReq: AccessLevelUser,
-			Handler:  misc.HandleLanguageInline,
-			ChatType: ChatTypePrivate,
+			Name:        "lang",
+			LevelReq:    AccessLevelUser,
+			Handler:     misc.HandleLanguageInline,
+			ChatType:    ChatTypePrivate,
+			Description: "Change the bot language",
 		},
 		{
-			Name:     "admin",
-			LevelReq: AccessLevelSudoAdmin,
-			Handler:  commands.HandleAdmin,
-			ChatType: ChatTypePrivate,
+			Name:        "admin",
+			LevelReq:    AccessLevelSudoAdmin,
+			Handler:     commands.HandleAdmin,
+			ChatType:    ChatTypePrivate,
+			Description: "Admin commands",
 		},
 		{
-			Name:     "broadcast",
-			LevelReq: AccessLevelAdmin,
-			Handler:  commands.CommandBroadcast,
-			ChatType: ChatTypePrivate,
+			Name:        "broadcast",
+			LevelReq:    AccessLevelAdmin,
+			Handler:     commands.CommandBroadcast,
+			ChatType:    ChatTypePrivate,
+			Description: "Broadcast a message to all users",
 		},
 	}
 

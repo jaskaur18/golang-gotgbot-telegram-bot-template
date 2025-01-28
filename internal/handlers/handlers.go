@@ -42,6 +42,38 @@ func LoadHandlers(s *bot.Server) {
 	log.Debug().Msg("Loading handlers")
 	loadCallbackQueryHandlers(s)
 	loadMessageFilterHandler(s)
+
+	setMyCommands(s)
+}
+
+func setMyCommands(s *bot.Server) {
+	cmds := GetCommandList()
+
+	var commands []gotgbot.BotCommand
+
+	for _, cmd := range cmds {
+		if cmd.LevelReq != AccessLevelUser {
+			// Skip commands that are not for users
+			continue
+		}
+
+		if cmd.Name != strings.ToLower(cmd.Name) {
+			log.Warn().Str("Command", cmd.Name).Msg("Command name should be in all lowercase")
+			continue
+		}
+
+		commands = append(commands, gotgbot.BotCommand{
+			Command:     cmd.Name,
+			Description: cmd.Description,
+		})
+	}
+
+	_, err := s.Bot.SetMyCommands(commands, &gotgbot.SetMyCommandsOpts{
+		Scope: gotgbot.BotCommandScopeAllPrivateChats{},
+	})
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to set commands")
+	}
 }
 
 // loadCallbackQueryHandlers loads handlers for processing callback queries.
