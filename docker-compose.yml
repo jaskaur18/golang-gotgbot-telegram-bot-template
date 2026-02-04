@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: tg_bot
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - .env
+    environment:
+      - PSQL_HOST=postgres
+      - REDIS_URI=redis://redis:6379
+    restart: always
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: bot_postgres
+    environment:
+      POSTGRES_USER: ${PSQL_USER:-postgres}
+      POSTGRES_PASSWORD: ${PSQL_PASS:-postgres}
+      POSTGRES_DB: ${PSQL_DBNAME:-bot}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: bot_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+volumes:
+  postgres_data:
+  redis_data:

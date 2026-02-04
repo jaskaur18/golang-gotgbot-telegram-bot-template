@@ -1,21 +1,38 @@
-# Use an official Go runtime as a parent image
-FROM golang:1.20-alpine
+# Build Stage
+FROM golang:1.21-alpine AS builder
 
-# Set the working directory to /go/src/app
-WORKDIR /go/src/app
+WORKDIR /app
 
-# Install build-base package
-RUN apk add --no-cache build-base
+# Install git for fetch
+RUN apk add --no-cache git
 
-# Copy the current directory contents into the container at /go/src/app
+# Copy go mod and sum files
+COPY go.mod go.sum ./
+
+# Download all dependencies. 
+RUN go mod download
+
+# Copy the source from the current directory to the Working Directory inside the container
 COPY . .
 
-# Build the app
-RUN make build
+# Build the Go app
+RUN go build -o bot main.go
 
+# Production Stage
+FROM alpine:latest  
 
-RUN echo "Running the app..."
+WORKDIR /root/
 
-# Start the app
-CMD make run
+# Install ca-certificates
+RUN apk --no-cache add ca-certificates
 
+# Copy the Pre-built binary from the previous stage
+COPY --from=builder /app/bot .
+COPY --from=builder /app/locales ./locales
+COPY --from=builder /app/.env .
+
+# Expose port (if webhook used, otherwise not strictly needed but good practice)
+EXPOSE 8080
+
+# Command to run the executable
+CMD ["./bot"]

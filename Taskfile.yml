@@ -20,15 +20,6 @@ tasks:
       - task: install:tools
       - task: install:golint
 
-  gen:
-    desc: Generate Config
-    cmds:
-      - task: config-gen
-
-  config-gen:
-    desc: Generate config file.
-    cmds:
-      - pkl-gen-go pkl/BotConfig.pkl
 
   dev:
     desc: Run the dev server.

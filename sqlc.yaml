@@ -3,8 +3,6 @@ sql:
   - engine: "postgresql"
     queries: "queries/*.sql"
     schema: "migrations/*.sql"
-    database:
-      uri: "postgresql://${PSQL_USER}:${PSQL_PASS}@${PSQL_HOST}:${PSQL_PORT}/${PSQL_DBNAME}?sslmode=${PSQL_SSLMODE}"
     gen:
       go:
         package: "db"
@@ -12,8 +10,7 @@ sql:
         sql_package: "pgx/v5"
         emit_json_tags: true
         emit_empty_slices: true
+        emit_pointers_for_null_types: true
         overrides:
           - db_type: "pg_catalog.timestamp"
-            go_type:
-              import: "time"
-              type: "Time"
+            go_type: "time.Time"

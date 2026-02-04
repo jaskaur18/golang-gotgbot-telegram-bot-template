@@ -10,7 +10,7 @@ BEGIN
     WHERE (table_schema = 'public'
         AND column_default IS NOT NULL)
         AND (
-            (data_type = 'boolean' AND column_default <> 'false'::boolean)
+            (data_type = 'boolean' AND column_default <> 'false')
             OR (data_type IN ('char', 'character', 'varchar', 'character varying', 'text')
                 AND column_default NOT LIKE '''%''')
             OR (data_type IN ('smallint', 'integer', 'bigint', 'smallserial', 'serial', 'bigserial')
